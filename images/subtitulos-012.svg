@@ -1,1 +1,71 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 588" enable-background="new 0 0 1024 588"><g><path fill="#fff" stroke="#444" stroke-width=".887" stroke-miterlimit="10" d="M602.7 536.8h127.3v44.3h-127.3z"/><path fill="#444" d="M696.3 541.7c-10.2 0-18.5 6.3-18.5 14.1 0 4.4 2.6 8.3 6.7 10.9-1.4 2.9-4.6 4.7-4.6 4.7s5.3 1.9 10.4-1.3l1-.7c1.6.4 3.3.5 5.1.5 10.2 0 18.5-6.3 18.5-14.1-.1-7.8-8.4-14.1-18.6-14.1zm-9.4 16.5c-1.2 0-2.2-1-2.2-2.2 0-1.2 1-2.2 2.2-2.2 1.2 0 2.2 1 2.2 2.2-.1 1.2-1 2.2-2.2 2.2zm9.3 0c-1.2 0-2.2-1-2.2-2.2 0-1.2 1-2.2 2.2-2.2s2.2 1 2.2 2.2c0 1.2-1 2.2-2.2 2.2zm9.5 0c-1.2 0-2.2-1-2.2-2.2 0-1.2 1-2.2 2.2-2.2 1.2 0 2.2 1 2.2 2.2-.1 1.2-1 2.2-2.2 2.2z"/><text transform="translate(621.625 577.985)" fill="#444" font-family="'Verdana'" font-size="10">Subtítulos</text></g></svg>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   xmlns:dc="http://purl.org/dc/elements/1.1/"
+   xmlns:cc="http://creativecommons.org/ns#"
+   xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+   xmlns:svg="http://www.w3.org/2000/svg"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   viewBox="0 0 1024 588"
+   enable-background="new 0 0 1024 588"
+   id="svg2"
+   version="1.1"
+   inkscape:version="0.91 r"
+   sodipodi:docname="subtitulos-012.svg">
+  <metadata
+     id="metadata16">
+    <rdf:RDF>
+      <cc:Work
+         rdf:about="">
+        <dc:format>image/svg+xml</dc:format>
+        <dc:type
+           rdf:resource="http://purl.org/dc/dcmitype/StillImage" />
+      </cc:Work>
+    </rdf:RDF>
+  </metadata>
+  <defs
+     id="defs14" />
+  <sodipodi:namedview
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1"
+     objecttolerance="10"
+     gridtolerance="10"
+     guidetolerance="10"
+     inkscape:pageopacity="0"
+     inkscape:pageshadow="2"
+     inkscape:window-width="1366"
+     inkscape:window-height="721"
+     id="namedview12"
+     showgrid="false"
+     inkscape:zoom="6.662142"
+     inkscape:cx="658.09957"
+     inkscape:cy="24.887699"
+     inkscape:window-x="-3"
+     inkscape:window-y="-3"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg2" />
+  <path
+     style="fill:#805a8d;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 691.15118,571.58632 c -0.41865,-0.0757 -0.91458,-0.19439 -1.10207,-0.26375 -0.32522,-0.1203 -0.31093,-0.14584 0.31087,-0.55536 1.41853,-0.93426 3.72945,-3.51097 3.72858,-4.15743 -1.5e-4,-0.10984 -0.2993,-0.38862 -0.66477,-0.61951 -0.96142,-0.60738 -2.66323,-2.22588 -3.47264,-3.30264 -3.60741,-4.79891 -3.19869,-10.79198 1.03954,-15.24297 4.49216,-4.71767 12.38564,-6.85068 19.74251,-5.33493 5.66237,1.16664 10.362,4.43044 12.51257,8.68974 1.10762,2.19369 1.45055,5.02746 0.88127,7.28226 -1.40788,5.57632 -6.52085,9.74091 -13.75761,11.20577 -1.69177,0.34244 -7.2883,0.39226 -8.65984,0.0771 -0.83237,-0.19128 -0.87576,-0.18564 -1.35092,0.1756 -0.78981,0.60046 -2.50379,1.40703 -3.71811,1.74966 -1.28241,0.36185 -4.24345,0.52178 -5.48938,0.29648 z m 6.38773,-13.76982 c 0.62894,-0.31555 1.19717,-1.25785 1.20061,-1.99096 0.005,-1.13695 -1.08999,-2.24115 -2.22863,-2.24672 -1.23917,-0.006 -2.3729,1.24965 -2.23476,2.4752 0.18177,1.61263 1.80923,2.49175 3.26278,1.76248 z m 9.47401,-0.0778 c 1.40317,-0.93738 1.34625,-2.98954 -0.10601,-3.82214 -0.73634,-0.42215 -1.43595,-0.42937 -2.16024,-0.0223 -1.18145,0.66401 -1.52952,2.19138 -0.74915,3.28732 0.65317,0.91728 2.08129,1.18114 3.0154,0.55712 z m 9.40493,0.0413 c 1.73865,-1.06007 1.30041,-3.77462 -0.66901,-4.14409 -1.62042,-0.30399 -3.1077,1.32021 -2.60465,2.84445 0.18581,0.56302 0.79971,1.26019 1.28344,1.45753 0.54793,0.22353 1.4868,0.14905 1.99022,-0.15789 z"
+     id="path4144"
+     inkscape:connector-curvature="0" />
+  <path
+     style="fill:#805a8d;fill-opacity:1;stroke:none;stroke-width:0.5;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1"
+     d="m 602.37658,558.98002 0,-22.51528 64.01845,0 64.01845,0 0,22.51528 0,22.51528 -64.01845,0 -64.01845,0 0,-22.51528 z m 127.28639,0 0,-21.76477 -63.26794,0 -63.26794,0 0,21.76477 0,21.76477 63.26794,0 63.26794,0 0,-21.76477 z"
+     id="path4150"
+     inkscape:connector-curvature="0" />
+  <text
+     xml:space="preserve"
+     style="font-style:normal;font-weight:normal;font-size:40px;line-height:125%;font-family:Sans;letter-spacing:0px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:1px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+     x="608.91052"
+     y="576.83154"
+     id="text4178"
+     sodipodi:linespacing="125%"><tspan
+       sodipodi:role="line"
+       id="tspan4180"
+       x="608.91052"
+       y="576.83154"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:17.5px;font-family:'Abyssinica SIL';-inkscape-font-specification:'Abyssinica SIL';fill:#805a8d;fill-opacity:1">Subtítulos</tspan></text>
+</svg>
