@@ -38,6 +38,272 @@
 			flex-direction: column;
 		}
 
+		/* Sistema de iconos puros por CSS */
+		.ico {
+			display: inline-block;
+			width: 14px;
+			height: 14px;
+			position: relative;
+			vertical-align: middle;
+			flex-shrink: 0;
+		}
+
+		/* Play (triángulo CSS) */
+		.ico-play::before {
+			content: "";
+			position: absolute;
+			top: 1px;
+			left: 3px;
+			width: 0;
+			height: 0;
+			border-top: 6px solid transparent;
+			border-bottom: 6px solid transparent;
+			border-left: 10px solid currentColor;
+		}
+
+		/* Pause (dos barras verticales CSS) */
+		.ico-pause::before,
+		.ico-pause::after {
+			content: "";
+			position: absolute;
+			top: 1px;
+			width: 4px;
+			height: 12px;
+			background: currentColor;
+			border-radius: 1px;
+		}
+		.ico-pause::before { left: 2px; }
+		.ico-pause::after { right: 2px; }
+
+		/* Stop (cuadrado CSS) */
+		.ico-stop::before {
+			content: "";
+			position: absolute;
+			top: 2px;
+			left: 2px;
+			width: 10px;
+			height: 10px;
+			background: currentColor;
+			border-radius: 1px;
+		}
+
+		/* Audio / Altavoz (trapecio + onda CSS) */
+		.ico-volume::before {
+			content: "";
+			position: absolute;
+			top: 3px;
+			left: 1px;
+			width: 5px;
+			height: 8px;
+			background: currentColor;
+			clip-path: polygon(0 25%, 45% 25%, 100% 0, 100% 100%, 45% 75%, 0 75%);
+		}
+		.ico-volume::after {
+			content: "";
+			position: absolute;
+			top: 2px;
+			right: 1px;
+			width: 5px;
+			height: 10px;
+			border-right: 2px solid currentColor;
+			border-top: 2px solid transparent;
+			border-bottom: 2px solid transparent;
+			border-radius: 50%;
+		}
+
+		/* Mute (altavoz + línea diagonal CSS) */
+		.ico-mute::before {
+			content: "";
+			position: absolute;
+			top: 3px;
+			left: 1px;
+			width: 6px;
+			height: 8px;
+			background: currentColor;
+			clip-path: polygon(0 25%, 45% 25%, 100% 0, 100% 100%, 45% 75%, 0 75%);
+		}
+		.ico-mute::after {
+			content: "";
+			position: absolute;
+			top: 6px;
+			right: 0;
+			width: 7px;
+			height: 2px;
+			background: #f87171;
+			transform: rotate(-45deg);
+		}
+
+		/* Loop A-B (rectángulo con bordes de retorno CSS) */
+		.ico-loop::before {
+			content: "";
+			position: absolute;
+			inset: 2px 1px;
+			border: 2px solid currentColor;
+			border-radius: 4px;
+		}
+		.ico-loop::after {
+			content: "";
+			position: absolute;
+			top: 0;
+			right: 3px;
+			width: 4px;
+			height: 4px;
+			border-top: 2px solid currentColor;
+			border-right: 2px solid currentColor;
+			transform: rotate(45deg);
+		}
+
+		/* Intérprete LSC (marco de persona/señas en CSS) */
+		.ico-lsc::before {
+			content: "";
+			position: absolute;
+			top: 1px;
+			left: 4px;
+			width: 6px;
+			height: 6px;
+			border: 2px solid currentColor;
+			border-radius: 50%;
+		}
+		.ico-lsc::after {
+			content: "";
+			position: absolute;
+			bottom: 1px;
+			left: 2px;
+			width: 10px;
+			height: 5px;
+			border: 2px solid currentColor;
+			border-bottom: 0;
+			border-radius: 5px 5px 0 0;
+		}
+
+		/* Vista Lado a Lado (dos columnas CSS) */
+		.ico-split::before,
+		.ico-split::after {
+			content: "";
+			position: absolute;
+			top: 2px;
+			width: 6px;
+			height: 10px;
+			border: 1.8px solid currentColor;
+			border-radius: 2px;
+		}
+		.ico-split::before { left: 0; }
+		.ico-split::after { right: 0; }
+
+		/* Subtítulos CC (recuadro con dos líneas inferiores CSS) */
+		.ico-cc::before {
+			content: "";
+			position: absolute;
+			inset: 1px 0;
+			border: 1.8px solid currentColor;
+			border-radius: 3px;
+		}
+		.ico-cc::after {
+			content: "";
+			position: absolute;
+			bottom: 4px;
+			left: 3px;
+			right: 3px;
+			height: 2px;
+			background: currentColor;
+		}
+
+		/* Pantalla completa (esquinas enmarcadas CSS) */
+		.ico-fullscreen::before {
+			content: "";
+			position: absolute;
+			inset: 1px;
+			border: 2px solid currentColor;
+			clip-path: polygon(0 0, 35% 0, 35% 25%, 100% 25%, 100% 0, 100% 35%, 75% 35%, 75% 65%, 100% 65%, 100% 100%, 65% 100%, 65% 75%, 35% 75%, 35% 100%, 0 100%, 0 65%, 25% 65%, 25% 35%, 0 35%);
+		}
+
+		/* Glosario / Libro (dos páginas CSS) */
+		.ico-book::before {
+			content: "";
+			position: absolute;
+			inset: 1px 1px;
+			border: 1.8px solid currentColor;
+			border-radius: 2px;
+		}
+		.ico-book::after {
+			content: "";
+			position: absolute;
+			top: 2px;
+			bottom: 2px;
+			left: 6px;
+			width: 1.8px;
+			background: currentColor;
+		}
+
+		/* Práctica / Diana (dos círculos concéntricos CSS) */
+		.ico-quiz::before {
+			content: "";
+			position: absolute;
+			inset: 1px;
+			border: 2px solid currentColor;
+			border-radius: 50%;
+		}
+		.ico-quiz::after {
+			content: "";
+			position: absolute;
+			inset: 5px;
+			background: currentColor;
+			border-radius: 50%;
+		}
+
+		/* Enlace externo (flecha diagonal CSS) */
+		.ico-external::before {
+			content: "";
+			position: absolute;
+			top: 2px;
+			right: 2px;
+			width: 7px;
+			height: 7px;
+			border-top: 2px solid currentColor;
+			border-right: 2px solid currentColor;
+		}
+		.ico-external::after {
+			content: "";
+			position: absolute;
+			top: 5px;
+			left: 2px;
+			width: 9px;
+			height: 2px;
+			background: currentColor;
+			transform: rotate(-45deg);
+		}
+
+		/* Cambiar esquina (cruz de posición CSS) */
+		.ico-corner::before {
+			content: "";
+			position: absolute;
+			inset: 2px;
+			border: 1.6px dashed currentColor;
+		}
+		.ico-corner::after {
+			content: "";
+			position: absolute;
+			right: 2px;
+			bottom: 2px;
+			width: 5px;
+			height: 5px;
+			background: currentColor;
+		}
+
+		/* Cerrar (X en CSS) */
+		.ico-close::before,
+		.ico-close::after {
+			content: "";
+			position: absolute;
+			top: 6px;
+			left: 1px;
+			width: 12px;
+			height: 2px;
+			background: currentColor;
+		}
+		.ico-close::before { transform: rotate(45deg); }
+		.ico-close::after { transform: rotate(-45deg); }
+
 		.skip-link {
 			position: absolute;
 			left: -9999px;
@@ -244,6 +510,9 @@
 			font-size: 0.72rem;
 			padding: 2px 6px;
 			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 4px;
 		}
 
 		.interpreter-size-btn:hover {
@@ -334,7 +603,7 @@
 			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
-			gap: 6px;
+			gap: 7px;
 			text-decoration: none;
 			transition: background 0.15s ease, border-color 0.15s ease;
 		}
@@ -397,6 +666,9 @@
 			margin: 0 0 10px;
 			font-size: 1.05rem;
 			color: var(--text-light);
+			display: flex;
+			align-items: center;
+			gap: 8px;
 		}
 
 		.concepts-chips {
@@ -414,6 +686,9 @@
 			font-size: 0.86rem;
 			font-weight: 600;
 			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
 			transition: background 0.15s ease, border-color 0.15s ease;
 		}
 
@@ -471,7 +746,8 @@
 				class="ctrl-btn"
 				aria-haspopup="dialog"
 			>
-				📖 Glosario Matemático LSC
+				<span class="ico ico-book" aria-hidden="true"></span>
+				<span>Glosario Matemático LSC</span>
 			</button>
 			<button
 				id="btnOpenQuizModal"
@@ -479,7 +755,8 @@
 				class="ctrl-btn"
 				aria-haspopup="dialog"
 			>
-				🎯 Practicar Señas LSC
+				<span class="ico ico-quiz" aria-hidden="true"></span>
+				<span>Practicar Señas LSC</span>
 			</button>
 			<a
 				href="glosario/index.html"
@@ -488,7 +765,8 @@
 				class="ctrl-btn"
 				aria-label="Abrir Glosario Matemático LSC en una pestaña nueva"
 			>
-				↗ Abrir en pestaña
+				<span class="ico ico-external" aria-hidden="true"></span>
+				<span>Abrir en pestaña</span>
 			</a>
 		</div>
 	</header>
@@ -512,7 +790,10 @@
 					aria-label="Ventana de intérprete en Lengua de Señas Colombiana"
 				>
 					<div class="interpreter-header">
-						<span>🤟 Intérprete LSC</span>
+						<span>
+							<span class="ico ico-lsc" aria-hidden="true"></span>
+							Intérprete LSC
+						</span>
 						<div class="interpreter-pip-actions">
 							<button
 								id="btnCycleCorner"
@@ -521,7 +802,8 @@
 								title="Cambiar esquina del intérprete"
 								aria-label="Cambiar esquina de la ventana del intérprete LSC"
 							>
-								✥ Esquina
+								<span class="ico ico-corner" aria-hidden="true"></span>
+								<span>Esquina</span>
 							</button>
 							<button
 								id="btnTogglePipSize"
@@ -584,7 +866,8 @@
 						class="ctrl-btn"
 						aria-label="Reproducir lección"
 					>
-						▶ Reproducir
+						<span id="playPauseIcon" class="ico ico-play" aria-hidden="true"></span>
+						<span id="playPauseText">Reproducir</span>
 					</button>
 					<button
 						id="btnStop"
@@ -592,7 +875,8 @@
 						class="ctrl-btn"
 						aria-label="Detener y reiniciar lección"
 					>
-						⏹ Detener
+						<span class="ico ico-stop" aria-hidden="true"></span>
+						<span>Detener</span>
 					</button>
 					<button
 						id="btnMute"
@@ -601,7 +885,8 @@
 						aria-pressed="false"
 						aria-label="Silenciar audio"
 					>
-						🔊 Audio
+						<span id="muteIcon" class="ico ico-volume" aria-hidden="true"></span>
+						<span id="muteText">Audio</span>
 					</button>
 					<button
 						id="btnLoopAB"
@@ -611,7 +896,8 @@
 						title="Repetir un tramo específico de la clase para practicar la seña"
 						aria-label="Marcar tramo A-B para repetir en bucle"
 					>
-						🔁 Tramo A-B
+						<span class="ico ico-loop" aria-hidden="true"></span>
+						<span id="loopABText">Tramo A-B</span>
 					</button>
 				</div>
 
@@ -654,7 +940,8 @@
 						aria-pressed="true"
 						aria-label="Mostrar u ocultar intérprete LSC"
 					>
-						🤟 Intérprete LSC
+						<span class="ico ico-lsc" aria-hidden="true"></span>
+						<span>Intérprete LSC</span>
 					</button>
 					<button
 						id="btnToggleSideBySide"
@@ -664,7 +951,8 @@
 						title="Colocar pizarra e intérprete LSC lado a lado sin superposición"
 						aria-label="Alternar vista lado a lado entre pizarra e intérprete LSC"
 					>
-						◫ Lado a Lado
+						<span class="ico ico-split" aria-hidden="true"></span>
+						<span>Lado a Lado</span>
 					</button>
 					<button
 						id="btnToggleCC"
@@ -673,7 +961,8 @@
 						aria-pressed="true"
 						aria-label="Mostrar u ocultar subtítulos"
 					>
-						💬 Subtítulos (CC)
+						<span class="ico ico-cc" aria-hidden="true"></span>
+						<span>Subtítulos (CC)</span>
 					</button>
 					<button
 						id="btnFullscreen"
@@ -681,7 +970,8 @@
 						class="ctrl-btn"
 						aria-label="Alternar pantalla completa"
 					>
-						⛶ Pantalla completa
+						<span class="ico ico-fullscreen" aria-hidden="true"></span>
+						<span>Pantalla completa</span>
 					</button>
 				</div>
 			</div>
@@ -697,16 +987,20 @@
 		</section>
 
 		<section class="concepts-panel" aria-label="Conceptos matemáticos de la clase en Lengua de Señas Colombiana">
-			<h2>🤟 Consulta rápida de señas matemáticas de esta clase (LSC):</h2>
+			<h2>
+				<span class="ico ico-lsc" aria-hidden="true"></span>
+				<span>Consulta rápida de señas matemáticas de esta clase (LSC):</span>
+			</h2>
 			<div id="conceptChipsContainer" class="concepts-chips"></div>
 		</section>
 	</main>
 
 	<dialog id="glossaryDialog" class="glossary-modal" aria-label="Glosario Matemático en Lengua de Señas Colombiana">
 		<div class="modal-header">
-			<strong id="glossaryModalTitle">📖 Glosario Matemático Interactivo (LSC)</strong>
+			<strong id="glossaryModalTitle">Glosario Matemático Interactivo (LSC)</strong>
 			<button id="btnCloseGlossaryModal" type="button" class="ctrl-btn" aria-label="Cerrar ventana de glosario">
-				✕ Cerrar (Esc)
+				<span class="ico ico-close" aria-hidden="true"></span>
+				<span>Cerrar (Esc)</span>
 			</button>
 		</div>
 		<iframe id="glossaryIframe" class="modal-iframe" title="Glosario Matemático LSC"></iframe>
@@ -744,9 +1038,14 @@
 			var ccContainer = document.getElementById('ccContainer');
 
 			var btnPlayPause = document.getElementById('btnPlayPause');
+			var playPauseIcon = document.getElementById('playPauseIcon');
+			var playPauseText = document.getElementById('playPauseText');
 			var btnStop = document.getElementById('btnStop');
 			var btnMute = document.getElementById('btnMute');
+			var muteIcon = document.getElementById('muteIcon');
+			var muteText = document.getElementById('muteText');
 			var btnLoopAB = document.getElementById('btnLoopAB');
+			var loopABText = document.getElementById('loopABText');
 			var btnToggleInterpreter = document.getElementById('btnToggleInterpreter');
 			var btnToggleSideBySide = document.getElementById('btnToggleSideBySide');
 			var btnToggleCC = document.getElementById('btnToggleCC');
@@ -800,7 +1099,8 @@
 				teoria.play().catch(function () {});
 				interprete.play().catch(function () {});
 				cc.play().catch(function () {});
-				btnPlayPause.textContent = '⏸ Pausar';
+				playPauseIcon.className = 'ico ico-pause';
+				playPauseText.textContent = 'Pausar';
 				btnPlayPause.setAttribute('aria-label', 'Pausar lección');
 				announce('Reproduciendo lección.');
 			}
@@ -809,7 +1109,8 @@
 				teoria.pause();
 				interprete.pause();
 				cc.pause();
-				btnPlayPause.textContent = '▶ Reproducir';
+				playPauseIcon.className = 'ico ico-play';
+				playPauseText.textContent = 'Reproducir';
 				btnPlayPause.setAttribute('aria-label', 'Reproducir lección');
 				announce('Lección en pausa.');
 			}
@@ -833,7 +1134,8 @@
 			function toggleMute () {
 				teoria.muted = !teoria.muted;
 				btnMute.setAttribute('aria-pressed', String(teoria.muted));
-				btnMute.textContent = teoria.muted ? '🔇 Silenciado' : '🔊 Audio';
+				muteIcon.className = teoria.muted ? 'ico ico-mute' : 'ico ico-volume';
+				muteText.textContent = teoria.muted ? 'Silenciado' : 'Audio';
 				btnMute.setAttribute('aria-label', teoria.muted ? 'Activar audio' : 'Silenciar audio');
 				announce(teoria.muted ? 'Audio silenciado.' : 'Audio activado.');
 			}
@@ -843,7 +1145,7 @@
 				if (loopState.pointA === null) {
 					loopState.pointA = now;
 					btnLoopAB.setAttribute('aria-pressed', 'true');
-					btnLoopAB.textContent = '🔁 A: ' + formatTime(now) + ' → B?';
+					loopABText.textContent = 'A: ' + formatTime(now) + ' - B?';
 					announce('Punto inicial A marcado en ' + formatTime(now) + '. Pulsa nuevamente para fijar el punto final B.');
 				} else if (loopState.pointB === null) {
 					if (now <= loopState.pointA + 0.5) {
@@ -851,13 +1153,13 @@
 					} else {
 						loopState.pointB = now;
 					}
-					btnLoopAB.textContent = '🔁 ' + formatTime(loopState.pointA) + ' - ' + formatTime(loopState.pointB);
+					loopABText.textContent = formatTime(loopState.pointA) + ' - ' + formatTime(loopState.pointB);
 					announce('Repitiendo en bucle el tramo desde ' + formatTime(loopState.pointA) + ' hasta ' + formatTime(loopState.pointB) + '.');
 				} else {
 					loopState.pointA = null;
 					loopState.pointB = null;
 					btnLoopAB.setAttribute('aria-pressed', 'false');
-					btnLoopAB.textContent = '🔁 Tramo A-B';
+					loopABText.textContent = 'Tramo A-B';
 					announce('Bucle de tramo A-B desactivado.');
 				}
 			}
@@ -966,7 +1268,13 @@
 					var btn = document.createElement('button');
 					btn.type = 'button';
 					btn.className = 'chip-btn';
-					btn.textContent = '🤟 ' + term.label;
+					var ico = document.createElement('span');
+					ico.className = 'ico ico-lsc';
+					ico.setAttribute('aria-hidden', 'true');
+					var txt = document.createElement('span');
+					txt.textContent = term.label;
+					btn.appendChild(ico);
+					btn.appendChild(txt);
 					btn.setAttribute('aria-label', 'Ver seña en LSC del concepto ' + term.label);
 					btn.addEventListener('click', function () {
 						openGlossaryWithUrl('glosario/index.html?termino=' + encodeURIComponent(term.id));
