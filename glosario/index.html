@@ -1,57 +1,784 @@
 <!DOCTYPE html>
-<html>
+<html lang="es">
 
 <head>
-	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge" />
-	<title>Glosario Matematico</title>
-	<link rel="shortcut icon" href="../images/favicon.png">
-	<!--Adobe Edge Runtime-->
-	<meta http-equiv="X-UA-Compatible" content="IE=Edge">
-	<script type="text/javascript" charset="utf-8" src="edge_includes/edge.5.0.0.min.js"></script>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+	<meta name="description" content="Glosario Matemático en Lengua de Señas Colombiana (LSC) con videos demostrativos, filtros por categoría y modo de práctica interactiva." />
+	<title>Glosario Matemático LSC · Lengua de Señas Colombiana</title>
+	<link rel="shortcut icon" href="../images/favicon.png" />
 	<style>
-		.edgeLoad-EDGE-22572471 {
-			visibility: hidden;
+		:root {
+			--bg-page: #f8fafc;
+			--bg-card: #ffffff;
+			--bg-header: #0f172a;
+			--text-main: #0f172a;
+			--text-muted: #475569;
+			--accent: #0284c7;
+			--accent-dark: #0369a1;
+			--accent-active: #059669;
+			--focus-ring: #f59e0b;
+			--border: #cbd5e1;
+		}
+
+		* {
+			box-sizing: border-box;
 		}
 
 		body {
-			background-image: url(../images/fondo.jpg);
+			margin: 0;
+			padding: 0;
+			font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+			background-color: var(--bg-page);
+			background-image: url("../images/fondo.jpg");
 			background-repeat: repeat;
+			color: var(--text-main);
+			line-height: 1.5;
+		}
+
+		header.glossary-header {
+			background: var(--bg-header);
+			color: #ffffff;
+			padding: 16px 24px;
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			flex-wrap: wrap;
+			gap: 14px;
+		}
+
+		.header-title {
+			margin: 0;
+			font-size: 1.3rem;
+			display: flex;
+			align-items: center;
+			gap: 10px;
+		}
+
+		.toolbar {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 10px;
+		}
+
+		.search-input {
+			padding: 9px 14px;
+			border-radius: 8px;
+			border: 2px solid #94a3b8;
+			font-size: 0.95rem;
+			min-width: 230px;
+		}
+
+		.btn {
+			background: var(--accent);
+			color: #ffffff;
+			border: 2px solid transparent;
+			border-radius: 8px;
+			padding: 8px 14px;
+			font-size: 0.9rem;
+			font-weight: 700;
+			cursor: pointer;
+			text-decoration: none;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+		}
+
+		.btn:hover {
+			background: var(--accent-dark);
+		}
+
+		.btn[aria-pressed="true"] {
+			background: var(--accent-active);
+			border-color: #ffffff;
+		}
+
+		.btn:focus-visible,
+		.search-input:focus-visible,
+		.cat-btn:focus-visible,
+		.quiz-option-btn:focus-visible {
+			outline: 3px solid var(--focus-ring);
+			outline-offset: 2px;
+		}
+
+		main {
+			max-width: 1120px;
+			margin: 20px auto;
+			padding: 0 16px 40px;
+		}
+
+		.category-bar {
+			display: flex;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-bottom: 16px;
+			background: rgba(255, 255, 255, 0.92);
+			padding: 10px 14px;
+			border-radius: 10px;
+			border: 1px solid var(--border);
+		}
+
+		.cat-btn {
+			background: #e2e8f0;
+			color: var(--text-main);
+			border: 2px solid transparent;
+			border-radius: 999px;
+			padding: 6px 14px;
+			font-size: 0.86rem;
+			font-weight: 700;
+			cursor: pointer;
+		}
+
+		.cat-btn[aria-pressed="true"] {
+			background: var(--bg-header);
+			color: #ffffff;
+		}
+
+		.glossary-grid {
+			display: grid;
+			grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+			gap: 18px;
+		}
+
+		.term-card {
+			background: var(--bg-card);
+			border: 2px solid var(--border);
+			border-radius: 12px;
+			overflow: hidden;
+			display: flex;
+			flex-direction: column;
+			box-shadow: 0 4px 14px rgba(15, 23, 42, 0.08);
+			transition: border-color 0.2s ease, transform 0.2s ease;
+		}
+
+		.term-card.is-highlighted {
+			border-color: var(--focus-ring);
+			box-shadow: 0 0 0 4px rgba(245, 158, 11, 0.35);
+		}
+
+		.term-card-body {
+			display: grid;
+			grid-template-columns: 120px 1fr;
+			gap: 14px;
+			padding: 14px;
+			flex: 1;
+			align-items: center;
+		}
+
+		.video-box {
+			position: relative;
+			width: 120px;
+			height: 168px;
+			background: #0f172a;
+			border-radius: 8px;
+			overflow: hidden;
+			display: flex;
+			align-items: center;
+			justify-content: center;
+		}
+
+		.video-box video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.term-category-tag {
+			display: inline-block;
+			font-size: 0.72rem;
+			font-weight: 700;
+			text-transform: uppercase;
+			background: #e0f2fe;
+			color: #0369a1;
+			padding: 2px 8px;
+			border-radius: 999px;
+			margin-bottom: 4px;
+		}
+
+		.term-info h2 {
+			margin: 0 0 6px;
+			font-size: 1.05rem;
+			color: var(--bg-header);
+		}
+
+		.term-info p {
+			margin: 0 0 8px;
+			font-size: 0.92rem;
+			color: var(--text-muted);
+		}
+
+		.formula-box {
+			display: flex;
+			align-items: center;
+			flex-wrap: wrap;
+			gap: 8px;
+			margin-top: 6px;
+		}
+
+		.formula-box img {
+			max-height: 28px;
+			width: auto;
+		}
+
+		.term-card-footer {
+			background: #f1f5f9;
+			padding: 8px 14px;
+			border-top: 1px solid var(--border);
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			gap: 8px;
+		}
+
+		.btn-play-sign {
+			width: 100%;
+			justify-content: center;
+		}
+
+		.empty-state {
+			background: var(--bg-card);
+			padding: 24px;
+			border-radius: 10px;
+			text-align: center;
+			font-weight: 600;
+		}
+
+		/* Modo Práctica / Autoevaluación LSC */
+		.quiz-panel {
+			background: var(--bg-card);
+			border: 2px solid var(--accent);
+			border-radius: 14px;
+			padding: 24px;
+			margin-bottom: 24px;
+			box-shadow: 0 10px 30px rgba(15, 23, 42, 0.12);
+		}
+
+		.quiz-panel[hidden] {
+			display: none !important;
+		}
+
+		.quiz-layout {
+			display: grid;
+			grid-template-columns: 200px 1fr;
+			gap: 24px;
+			align-items: center;
+		}
+
+		@media (max-width: 640px) {
+			.quiz-layout {
+				grid-template-columns: 1fr;
+				justify-items: center;
+			}
+		}
+
+		.quiz-video-wrap {
+			width: 180px;
+			height: 250px;
+			background: #0f172a;
+			border-radius: 10px;
+			overflow: hidden;
+			border: 3px solid var(--accent);
+		}
+
+		.quiz-video-wrap video {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+		}
+
+		.quiz-options {
+			display: grid;
+			grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+			gap: 10px;
+			margin-top: 14px;
+		}
+
+		.quiz-option-btn {
+			background: #f8fafc;
+			color: var(--text-main);
+			border: 2px solid #94a3b8;
+			border-radius: 10px;
+			padding: 12px 16px;
+			font-size: 0.96rem;
+			font-weight: 700;
+			cursor: pointer;
+			text-align: left;
+		}
+
+		.quiz-option-btn:hover {
+			border-color: var(--accent);
+			background: #f0f9ff;
+		}
+
+		.quiz-option-btn.is-correct {
+			background: #dcfce7;
+			border-color: #16a34a;
+			color: #14532d;
+		}
+
+		.quiz-option-btn.is-wrong {
+			background: #fee2e2;
+			border-color: #dc2626;
+			color: #7f1d1d;
+		}
+
+		.quiz-feedback {
+			margin-top: 14px;
+			font-weight: 700;
+			font-size: 1rem;
 		}
 	</style>
-	<script>
-		AdobeEdge.loadComposition('index', 'EDGE-22572471', {
-			scaleToFit: "width",
-			centerStage: "horizontal",
-			minW: "0",
-			maxW: "undefined",
-			width: "800",
-			height: "950"
-		}, {
-			/*dom: [{
-				id: 'preloader4',
-				type: 'image',
-				tag: 'img',
-				rect: ['340', '13px', '120px', '120px', 'auto', 'auto'],
-				fill: ["rgba(0,0,0,0)", 'images/preloader4.gif', '0px', '0px']
-			}],*/
-			style: {
-				'${symbolSelector}': {
-					isStage: true,
-					rect: [undefined, undefined, '800px', '950px']
-				}
-			}
-		}, {
-			"dom": []
-		});
-	</script>
-	<!--Adobe Edge Runtime End-->
-
 </head>
 
-<body style="margin:0;padding:0;">
-	<div id="Stage" class="EDGE-22572471">
-	</div>
+<body>
+	<header class="glossary-header">
+		<h1 class="header-title">
+			<img src="images/hands-01.svg" alt="" width="36" height="26" aria-hidden="true" />
+			<span>Glosario Matemático en LSC</span>
+		</h1>
+		<div class="toolbar">
+			<input
+				id="searchTermInput"
+				type="search"
+				class="search-input"
+				placeholder="Buscar término o definición..."
+				aria-label="Buscar término en el glosario matemático"
+			/>
+			<button
+				id="btnToggleQuizMode"
+				type="button"
+				class="btn"
+				aria-pressed="false"
+			>
+				🎯 Practicar Señas LSC
+			</button>
+			<button
+				id="btnToggleSlowMotion"
+				type="button"
+				class="btn"
+				aria-pressed="false"
+			>
+				🐢 Velocidad señas: 100%
+			</button>
+			<a href="../index.html" class="btn" aria-label="Volver al reproductor de la clase">
+				⬅ Volver a la clase
+			</a>
+		</div>
+	</header>
+
+	<main>
+		<section id="quizPanel" class="quiz-panel" hidden aria-label="Práctica interactiva de señas matemáticas en LSC">
+			<div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 14px;">
+				<h2 style="margin: 0; font-size: 1.2rem;">🎯 Práctica interactiva: ¿Qué concepto matemático representa esta seña en LSC?</h2>
+				<strong id="quizScoreDisplay">Aciertos: 0 / 0</strong>
+			</div>
+			<div class="quiz-layout">
+				<div class="quiz-video-wrap">
+					<video id="quizVideo" muted loop playsinline aria-label="Video de la seña en LSC a identificar"></video>
+				</div>
+				<div>
+					<p id="quizClueText" style="margin: 0 0 8px; color: var(--text-muted); font-size: 0.95rem;"></p>
+					<div id="quizOptionsContainer" class="quiz-options" role="group" aria-label="Opciones de respuesta"></div>
+					<p id="quizFeedback" class="quiz-feedback" role="status" aria-live="polite"></p>
+					<button id="btnNextQuestion" type="button" class="btn" style="margin-top: 8px;">
+						Siguiente seña ➡
+					</button>
+				</div>
+			</div>
+		</section>
+
+		<nav class="category-bar" aria-label="Filtrar términos por categoría matemática">
+			<button type="button" class="cat-btn" data-category="todos" aria-pressed="true">Todos (12)</button>
+			<button type="button" class="cat-btn" data-category="Ecuaciones" aria-pressed="false">Ecuaciones (3)</button>
+			<button type="button" class="cat-btn" data-category="Funciones" aria-pressed="false">Funciones (3)</button>
+			<button type="button" class="cat-btn" data-category="Álgebra" aria-pressed="false">Polinomios y Álgebra (3)</button>
+			<button type="button" class="cat-btn" data-category="Fundamentos" aria-pressed="false">Fundamentos (3)</button>
+		</nav>
+
+		<p id="resultsCount" role="status" aria-live="polite" style="font-weight: 600; margin-bottom: 14px;">
+			Mostrando 12 términos matemáticos con interpretación en Lengua de Señas Colombiana (LSC).
+		</p>
+		<div id="glossaryGrid" class="glossary-grid"></div>
+	</main>
+
+	<script>
+		(function () {
+			'use strict';
+
+			var TERMS = [
+				{
+					id: 'ecuacion',
+					title: 'Ecuación',
+					category: 'Ecuaciones',
+					video: 'media/video00.mp4',
+					definition: 'Es una igualdad en la cual hay términos conocidos y términos desconocidos.',
+					formulas: []
+				},
+				{
+					id: 'raiz-cuadrada',
+					title: 'Raíz Cuadrada',
+					category: 'Álgebra',
+					video: 'media/video01.mp4',
+					definition: 'Expresión radical de índice dos.',
+					formulas: [
+						{ src: 'png/cuadrada.png', alt: 'Símbolo de raíz cuadrada de x' }
+					]
+				},
+				{
+					id: 'constante',
+					title: 'Constante',
+					category: 'Fundamentos',
+					video: 'media/video02.mp4',
+					definition: 'Un valor fijo C que no cambia dentro de una expresión o ecuación.',
+					formulas: [
+						{ src: 'png/c.png', alt: 'Constante C' }
+					]
+				},
+				{
+					id: 'funcion-cuadratica',
+					title: 'Función Cuadrática',
+					category: 'Funciones',
+					video: 'media/video03.mp4',
+					definition: 'Es una función polinómica de segundo grado definida por:',
+					formulas: [
+						{ src: 'png/ecuacion.png', alt: 'f(x) = ax² + bx + c' },
+						{ src: 'png/cero.png', alt: 'con a diferente de 0' }
+					]
+				},
+				{
+					id: 'funcion-polinomica',
+					title: 'Función Polinómica',
+					category: 'Funciones',
+					video: 'media/video04.mp4',
+					definition: 'Es una función asociada a un polinomio con coeficientes en un anillo conmutativo (a menudo un cuerpo).',
+					formulas: [
+						{ src: 'png/funcion.png', alt: 'f: x tiende a P(x)' }
+					]
+				},
+				{
+					id: 'polinomio',
+					title: 'Polinomio',
+					category: 'Álgebra',
+					video: 'media/video05.mp4',
+					definition: 'Es una relación binaria de monomios, o una sucesión de sumas y restas de potencias enteras de una o de varias variables indeterminadas.',
+					formulas: []
+				},
+				{
+					id: 'ecuacion-segundo-grado',
+					title: 'Ecuación de Segundo Grado',
+					category: 'Ecuaciones',
+					video: 'media/video06.mp4',
+					definition: 'Ecuación algebraica cuadrática definida por la expresión:',
+					formulas: [
+						{ src: 'png/ecuacion.png', alt: 'ax² + bx + c = 0' },
+						{ src: 'png/cero.png', alt: 'con a diferente de 0' }
+					]
+				},
+				{
+					id: 'ecuacion-primer-grado',
+					title: 'Ecuación de Primer Grado',
+					category: 'Ecuaciones',
+					video: 'media/video07.mp4',
+					definition: 'Polinomio o ecuación algebraica lineal (de primera potencia).',
+					formulas: []
+				},
+				{
+					id: 'formula',
+					title: 'Fórmula',
+					category: 'Fundamentos',
+					video: 'media/video08.mp4',
+					definition: 'Es una expresión algebraica que relaciona variables o cantidades.',
+					formulas: []
+				},
+				{
+					id: 'propiedad',
+					title: 'Propiedad',
+					category: 'Fundamentos',
+					video: 'media/video09.mp4',
+					definition: 'Son reglas que se obtienen a partir de los axiomas (verdades lógicas mínimas de donde nace toda la matemática) y deben ser demostradas mediante estos.',
+					formulas: []
+				},
+				{
+					id: 'funcion',
+					title: 'Función',
+					category: 'Funciones',
+					video: 'media/video10.mp4',
+					definition: 'Es el término usado para indicar la relación o correspondencia entre dos o más cantidades.',
+					formulas: []
+				},
+				{
+					id: 'monomio',
+					title: 'Monomio',
+					category: 'Álgebra',
+					video: 'media/video11.mp4',
+					definition: 'Es una expresión algebraica compuesta únicamente por un solo término.',
+					formulas: []
+				}
+			];
+
+			var gridEl = document.getElementById('glossaryGrid');
+			var searchInput = document.getElementById('searchTermInput');
+			var resultsCount = document.getElementById('resultsCount');
+			var btnToggleSlowMotion = document.getElementById('btnToggleSlowMotion');
+			var btnToggleQuizMode = document.getElementById('btnToggleQuizMode');
+			var categoryBtns = document.querySelectorAll('.cat-btn');
+
+			var quizPanel = document.getElementById('quizPanel');
+			var quizVideo = document.getElementById('quizVideo');
+			var quizClueText = document.getElementById('quizClueText');
+			var quizOptionsContainer = document.getElementById('quizOptionsContainer');
+			var quizFeedback = document.getElementById('quizFeedback');
+			var quizScoreDisplay = document.getElementById('quizScoreDisplay');
+			var btnNextQuestion = document.getElementById('btnNextQuestion');
+
+			var playbackRate = 1.0;
+			var activeCategory = 'todos';
+			var highlightedTermId = null;
+
+			var quizState = {
+				correctCount: 0,
+				totalCount: 0,
+				currentTerm: null,
+				answered: false
+			};
+
+			function normalize (str) {
+				return (str || '')
+					.toLowerCase()
+					.normalize('NFD')
+					.replace(/[\u0300-\u036f]/g, '');
+			}
+
+			function playTermVideo (videoEl, btnEl, title) {
+				document.querySelectorAll('.glossary-grid video').forEach(function (v) {
+					if (v !== videoEl) {
+						v.pause();
+					}
+				});
+
+				videoEl.playbackRate = playbackRate;
+				if (videoEl.paused) {
+					videoEl.currentTime = 0;
+					videoEl.play().catch(function () {});
+					btnEl.textContent = '⏸ Pausar seña LSC';
+					btnEl.setAttribute('aria-label', 'Pausar seña en LSC de ' + title);
+				} else {
+					videoEl.pause();
+					btnEl.textContent = '🤟 Ver seña en LSC';
+					btnEl.setAttribute('aria-label', 'Reproducir seña en LSC de ' + title);
+				}
+			}
+
+			function renderCards () {
+				var query = normalize(searchInput.value);
+				var filtered = TERMS.filter(function (item) {
+					var matchesCategory = activeCategory === 'todos' || item.category === activeCategory;
+					var matchesQuery = !query || normalize(item.title + ' ' + item.definition + ' ' + item.category).indexOf(query) !== -1;
+					return matchesCategory && matchesQuery;
+				});
+
+				gridEl.innerHTML = '';
+				resultsCount.textContent = 'Mostrando ' + filtered.length + ' de ' + TERMS.length + ' términos matemáticos en LSC.';
+
+				if (filtered.length === 0) {
+					var empty = document.createElement('div');
+					empty.className = 'empty-state';
+					empty.textContent = 'No se encontraron términos que coincidan con tu búsqueda.';
+					gridEl.appendChild(empty);
+					return;
+				}
+
+				filtered.forEach(function (item) {
+					var article = document.createElement('article');
+					article.id = 'term-' + item.id;
+					article.className = 'term-card' + (highlightedTermId === item.id ? ' is-highlighted' : '');
+
+					var body = document.createElement('div');
+					body.className = 'term-card-body';
+
+					var videoBox = document.createElement('div');
+					videoBox.className = 'video-box';
+
+					var video = document.createElement('video');
+					video.src = item.video;
+					video.preload = 'metadata';
+					video.muted = true;
+					video.loop = true;
+					video.playsInline = true;
+					video.setAttribute('aria-label', 'Seña en LSC para ' + item.title);
+
+					videoBox.appendChild(video);
+
+					var info = document.createElement('div');
+					info.className = 'term-info';
+
+					var catTag = document.createElement('span');
+					catTag.className = 'term-category-tag';
+					catTag.textContent = item.category;
+
+					var h2 = document.createElement('h2');
+					h2.textContent = item.title;
+
+					var p = document.createElement('p');
+					p.textContent = item.definition;
+
+					info.appendChild(catTag);
+					info.appendChild(h2);
+					info.appendChild(p);
+
+					if (item.formulas && item.formulas.length > 0) {
+						var formulaBox = document.createElement('div');
+						formulaBox.className = 'formula-box';
+						item.formulas.forEach(function (f) {
+							var img = document.createElement('img');
+							img.src = f.src;
+							img.alt = f.alt;
+							formulaBox.appendChild(img);
+						});
+						info.appendChild(formulaBox);
+					}
+
+					body.appendChild(videoBox);
+					body.appendChild(info);
+
+					var footer = document.createElement('div');
+					footer.className = 'term-card-footer';
+
+					var playBtn = document.createElement('button');
+					playBtn.type = 'button';
+					playBtn.className = 'btn btn-play-sign';
+					playBtn.textContent = '🤟 Ver seña en LSC';
+					playBtn.setAttribute('aria-label', 'Reproducir seña en LSC de ' + item.title);
+
+					playBtn.addEventListener('click', function () {
+						playTermVideo(video, playBtn, item.title);
+					});
+
+					article.addEventListener('mouseenter', function () {
+						video.playbackRate = playbackRate;
+						video.play().catch(function () {});
+						playBtn.textContent = '⏸ Pausar seña LSC';
+					});
+
+					article.addEventListener('mouseleave', function () {
+						video.pause();
+						playBtn.textContent = '🤟 Ver seña en LSC';
+					});
+
+					footer.appendChild(playBtn);
+					article.appendChild(body);
+					article.appendChild(footer);
+					gridEl.appendChild(article);
+
+					if (highlightedTermId === item.id) {
+						setTimeout(function () {
+							article.scrollIntoView({ behavior: 'smooth', block: 'center' });
+							playTermVideo(video, playBtn, item.title);
+						}, 150);
+					}
+				});
+			}
+
+			function loadNextQuizQuestion () {
+				quizState.answered = false;
+				quizFeedback.textContent = '';
+
+				var randomIndex = Math.floor(Math.random() * TERMS.length);
+				var target = TERMS[randomIndex];
+				quizState.currentTerm = target;
+
+				var pool = TERMS.filter(function (t) { return t.id !== target.id; });
+				pool.sort(function () { return Math.random() - 0.5; });
+				var choices = [target, pool[0], pool[1], pool[2]];
+				choices.sort(function () { return Math.random() - 0.5; });
+
+				quizVideo.src = target.video;
+				quizVideo.playbackRate = playbackRate;
+				quizVideo.play().catch(function () {});
+				quizClueText.textContent = 'Pista conceptual: "' + target.definition + '"';
+
+				quizOptionsContainer.innerHTML = '';
+				choices.forEach(function (choice) {
+					var btn = document.createElement('button');
+					btn.type = 'button';
+					btn.className = 'quiz-option-btn';
+					btn.textContent = choice.title;
+					btn.addEventListener('click', function () {
+						if (quizState.answered) return;
+						quizState.answered = true;
+						quizState.totalCount += 1;
+
+						if (choice.id === target.id) {
+							quizState.correctCount += 1;
+							btn.classList.add('is-correct');
+							quizFeedback.textContent = '¡Correcto! Esta seña en LSC corresponde a "' + target.title + '".';
+						} else {
+							btn.classList.add('is-wrong');
+							quizFeedback.textContent = 'Respuesta incorrecta. La seña corresponde a "' + target.title + '".';
+						}
+						quizScoreDisplay.textContent = 'Aciertos: ' + quizState.correctCount + ' / ' + quizState.totalCount;
+					});
+					quizOptionsContainer.appendChild(btn);
+				});
+			}
+
+			function toggleQuizMode (forceOpen) {
+				var willOpen = typeof forceOpen === 'boolean' ? forceOpen : quizPanel.hasAttribute('hidden');
+				if (willOpen) {
+					quizPanel.removeAttribute('hidden');
+					btnToggleQuizMode.setAttribute('aria-pressed', 'true');
+					loadNextQuizQuestion();
+				} else {
+					quizPanel.setAttribute('hidden', '');
+					btnToggleQuizMode.setAttribute('aria-pressed', 'false');
+					quizVideo.pause();
+				}
+			}
+
+			searchInput.addEventListener('input', function () {
+				highlightedTermId = null;
+				renderCards();
+			});
+
+			categoryBtns.forEach(function (btn) {
+				btn.addEventListener('click', function () {
+					activeCategory = btn.getAttribute('data-category');
+					highlightedTermId = null;
+					categoryBtns.forEach(function (b) {
+						b.setAttribute('aria-pressed', String(b === btn));
+					});
+					renderCards();
+				});
+			});
+
+			btnToggleSlowMotion.addEventListener('click', function () {
+				playbackRate = playbackRate === 1.0 ? 0.5 : 1.0;
+				var isSlow = playbackRate === 0.5;
+				btnToggleSlowMotion.setAttribute('aria-pressed', String(isSlow));
+				btnToggleSlowMotion.textContent = isSlow ? '🐢 Velocidad señas: 50%' : '🐢 Velocidad señas: 100%';
+				document.querySelectorAll('video').forEach(function (v) {
+					v.playbackRate = playbackRate;
+				});
+			});
+
+			btnToggleQuizMode.addEventListener('click', function () {
+				toggleQuizMode();
+			});
+
+			btnNextQuestion.addEventListener('click', loadNextQuizQuestion);
+
+			var params = new URLSearchParams(window.location.search);
+			if (params.get('termino')) {
+				highlightedTermId = params.get('termino');
+			}
+			if (params.get('modo') === 'practica') {
+				toggleQuizMode(true);
+			}
+
+			renderCards();
+		})();
+	</script>
 </body>
 
 </html>
