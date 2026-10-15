@@ -1,31 +1,30 @@
 # Reproductor Educativo Accesible LSC (Lengua de Señas Colombiana)
 
-![Version](https://img.shields.io/badge/version-2.0.0-0ea5e9.svg)
-![WCAG](https://img.shields.io/badge/WCAG_2.2-AA_%2F_AAA_(1.2.6_Sign_Language)-005A9C.svg)
-![HTML5](https://img.shields.io/badge/HTML5-Video_Sincronizado_Nativo-E34F26.svg)
-![License](https://img.shields.io/badge/License-MIT-111827.svg)
+![Version](https://img.shields.io/badge/version-2.0.0-18181b.svg)
+![WCAG](https://img.shields.io/badge/WCAG_2.2-AA_%2F_AAA_(1.2.6_Sign_Language)-2563eb.svg)
+![HTML5](https://img.shields.io/badge/HTML5-Video_Sincronizado_Nativo-3f3f46.svg)
+![License](https://img.shields.io/badge/License-MIT-18181b.svg)
 
-Reproductor web educativo accesible diseñado para enseñar matemáticas a estudiantes con discapacidad auditiva mediante **Lengua de Señas Colombiana (LSC)**, subtítulos sincronizados (`CC`), control de velocidad de reproducción y un **Glosario Matemático interactivo en LSC**.
+Reproductor web educativo con diseño minimalista y accesible para la enseñanza de matemáticas en **Lengua de Señas Colombiana (LSC)**, equipado con subtítulos sincronizados (`CC`), control de velocidad (`0.25x`, `0.5x`, `1x`), repetición de tramos `A-B`, vista dividida lado a lado y un **Glosario Matemático interactivo en LSC**.
 
-![Interfaz del Reproductor LSC](./images/Interface-01.svg)
+![Vista previa del Reproductor Educativo LSC v2.0](./images/preview-reproductor-lsc.svg)
 
 ---
 
 ## Características principales (v2.0.0)
 
-1. **Sincronización multicapa en tiempo real (HTML5 nativo, sin dependencias obsoletas)**:
-   - Sincroniza automáticamente tres flujos de video (`media/teoria.mp4`, `media/interprete.mp4` y `media/CC.mp4`) corrigiendo cualquier desfase de tiempo (`< 0.2s`).
-   - Elimina por completo la dependencia histórica de *Adobe Edge Animate Runtime* (`edge.5.0.0.min.js`) y *jQuery 2.0.3*.
+1. **Barra de controles con ergonomía estándar de video (HTML5 y CSS nativo)**:
+   - Sincroniza automáticamente tres flujos de video (`media/teoria.mp4`, `media/interprete.mp4` y `media/CC.mp4`) corrigiendo cualquier desfase de tiempo (`< 0.2s`), sin depender de librerías obsoletas (*Adobe Edge Animate* ni *jQuery*).
+   - Disposición familiar de controles: transporte y tiempo a la izquierda (*Play/Pausa*, *Reiniciar*, *Volumen* y `00:00 / 00:00`) y herramientas de aprendizaje/accesibilidad a la derecha (*Velocidad `0.25x / 0.5x / 1x`*, *Bucle `A-B`*, *`CC`*, *`LSC`*, *Vista lado a lado* y *Pantalla completa*).
+   - Sistema de iconos construido íntegramente con geometría CSS (`::before` / `::after`).
 2. **Accesibilidad Web bajo WCAG 2.2 (Niveles A, AA y AAA)**:
-   - **`1.2.6 Sign Language (Prerecorded) [AAA]`**: Intérprete en Lengua de Señas Colombiana sincronizado, con **Modo Lado a Lado (`Side-by-Side`)** para que la ventana del intérprete nunca tape las fórmulas de la pizarra, selector de **4 esquinas** en modo flotante y botón **Ampliar / Reducir**.
+   - **`1.2.6 Sign Language (Prerecorded) [AAA]`**: Intérprete en Lengua de Señas Colombiana sincronizado, con **Modo Vista Dividida (Lado a Lado)** para que la ventana del intérprete nunca tape las fórmulas de la pizarra, cambio de esquina (`Posición`) y ajuste de tamaño (`Ampliar / Reducir`).
    - **`1.2.2 Captions (Prerecorded) [A]`**: Franja de subtítulos (`CC`) activable o desactivable en cualquier momento, incluso en **Pantalla Completa multicapa**.
-   - **`2.1.1 Keyboard [A]` y `2.4.7 Focus Visible [AA]`**: Todos los controles del reproductor y del glosario son `<button>` e `<input>` nativos operables por teclado, con indicador de foco de alto contraste (`:focus-visible`) y enlace de salto (*Skip link*).
+   - **`2.1.1 Keyboard [A]` y `2.4.7 Focus Visible [AA]`**: Controles semánticos `<button>` e `<input>` operables por teclado, con indicador de foco visible (`:focus-visible`) y enlace de salto (*Saltar al reproductor*).
    - **`4.1.2 Name, Role, Value [A]` y `4.1.3 Status Messages [AA]`**: Estados `aria-pressed`, etiquetas `aria-label` y anuncios en vivo (`role="status"`, `aria-live="polite"`).
-3. **Control de velocidad pedagógico (`25%`, `50%`, `100%`), Bucle `A → B` y barra de progreso**:
-   - Permite reducir la velocidad al **50%** o **25%** y marcar un **Tramo `A → B` en bucle** para repetir una explicación compleja en LSC tantas veces como el estudiante lo necesite.
-4. **Glosario Matemático Interactivo y Modo Práctica en LSC (`glosario/index.html` y Modal integrado)**:
-   - Catálogo de **12 conceptos algebraicos** con acceso rápido desde la pantalla principal (`?termino=...`), filtros por categoría matemática (*Ecuaciones*, *Funciones*, *Polinomios y Álgebra*, *Fundamentos*), buscador en tiempo real y cámara lenta (`50%`).
-   - **Modo Práctica / Autoevaluación LSC (`?modo=practica`)**: Muestra una seña matemática en LSC para que el estudiante identifique el concepto correspondiente entre 4 opciones con retroalimentación accesible inmediata.
+3. **Glosario Matemático Interactivo y Modo Práctica en LSC (`glosario/index.html` y Modal integrado)**:
+   - Catálogo de **12 conceptos algebraicos** con acceso rápido desde la pantalla principal (`?termino=...`), filtros por categoría matemática (*Ecuaciones*, *Funciones*, *Polinomios y Álgebra*, *Fundamentos*), buscador en tiempo real y reproducción a mitad de velocidad (`0.5x`).
+   - **Modo Práctica / Autoevaluación LSC (`?modo=practica`)**: Permite practicar el reconocimiento de señas matemáticas en LSC con retroalimentación accesible inmediata.
 
 ---
 
@@ -33,11 +32,11 @@ Reproductor web educativo accesible diseñado para enseñar matemáticas a estud
 
 | Tecla | Acción en el Reproductor |
 | :--- | :--- |
-| `Espacio` o `K` | Reproducir / Pausar la lección |
-| `←` / `→` | Retroceder / Adelantar 5 segundos |
+| `Espacio` o `K` | Reproducir / Pausar la lección (también haciendo clic sobre el video) |
+| `Flecha Izquierda` / `Derecha` | Retroceder / Adelantar 5 segundos |
 | `I` | Mostrar / Ocultar ventana del intérprete LSC |
-| `L` | Alternar vista **Lado a Lado** (pizarra + intérprete sin superposición) |
-| `C` | Mostrar / Ocultar subtítulos (CC) |
+| `L` | Alternar vista dividida **Lado a Lado** (pizarra + intérprete sin superposición) |
+| `C` | Mostrar / Ocultar subtítulos (`CC`) |
 | `M` | Silenciar / Activar audio |
 | `F` | Alternar Pantalla Completa multicapa |
 | `G` | Abrir el Glosario Matemático LSC en ventana modal |
@@ -47,11 +46,11 @@ Reproductor web educativo accesible diseñado para enseñar matemáticas a estud
 
 ## Uso local
 
-No requiere instalación de paquetes ni compilación. Puedes abrir `index.html` directamente en cualquier navegador moderno o servir la carpeta con un servidor estático local:
+No requiere instalación de paquetes ni compilación. Puedes servir la carpeta con cualquier servidor estático local:
 
 ```bash
-python3 -m http.server 8000
-# Abrir http://localhost:8000 en el navegador
+python3 -m http.server 8090
+# Abrir http://localhost:8090 en el navegador
 ```
 
 Consulta el detalle de cambios en [`CHANGELOG.md`](./CHANGELOG.md).
