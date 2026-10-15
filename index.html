@@ -4,21 +4,23 @@
 <head>
 	<meta charset="utf-8" />
 	<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-	<meta name="description" content="Reproductor educativo accesible con Lengua de Señas Colombiana (LSC), modo lado a lado, subtítulos sincronizados, repetición A-B y glosario matemático interactivo." />
-	<title>Reproductor Educativo LSC · Matemáticas Accesibles</title>
+	<meta name="description" content="Reproductor educativo accesible con Lengua de Señas Colombiana (LSC), subtítulos sincronizados, control de velocidad y glosario matemático interactivo." />
+	<title>Reproductor Educativo LSC · Matemáticas</title>
 	<link rel="shortcut icon" href="images/favicon.png" />
 	<style>
 		:root {
-			--bg-page: #0f172a;
-			--bg-panel: #1e293b;
-			--bg-stage: #ffffff;
-			--text-light: #f8fafc;
-			--text-muted: #cbd5e1;
-			--text-dark: #0f172a;
-			--accent: #0ea5e9;
-			--accent-active: #10b981;
-			--focus-ring: #f59e0b;
-			--border: #334155;
+			--bg-app: #f4f4f5;
+			--bg-surface: #ffffff;
+			--bg-player: #09090b;
+			--bg-controls: #18181b;
+			--text-primary: #18181b;
+			--text-secondary: #52525b;
+			--text-on-dark: #fafafa;
+			--text-muted-dark: #a1a1aa;
+			--border-light: #e4e4e7;
+			--border-dark: #27272a;
+			--accent: #3b82f6;
+			--focus-ring: #3b82f6;
 		}
 
 		* {
@@ -28,32 +30,30 @@
 		body {
 			margin: 0;
 			padding: 0;
-			font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-			background-color: var(--bg-page);
-			background-image: url("images/fondo.jpg");
-			background-repeat: repeat;
-			color: var(--text-light);
+			font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", Roboto, sans-serif;
+			background-color: var(--bg-app);
+			color: var(--text-primary);
 			min-height: 100vh;
 			display: flex;
 			flex-direction: column;
+			-webkit-font-smoothing: antialiased;
 		}
 
-		/* Sistema de iconos puros por CSS */
+		/* Iconos geométricos limpios en CSS */
 		.ico {
 			display: inline-block;
-			width: 14px;
-			height: 14px;
+			width: 16px;
+			height: 16px;
 			position: relative;
 			vertical-align: middle;
 			flex-shrink: 0;
 		}
 
-		/* Play (triángulo CSS) */
 		.ico-play::before {
 			content: "";
 			position: absolute;
-			top: 1px;
-			left: 3px;
+			top: 2px;
+			left: 4px;
 			width: 0;
 			height: 0;
 			border-top: 6px solid transparent;
@@ -61,244 +61,148 @@
 			border-left: 10px solid currentColor;
 		}
 
-		/* Pause (dos barras verticales CSS) */
 		.ico-pause::before,
 		.ico-pause::after {
 			content: "";
 			position: absolute;
-			top: 1px;
-			width: 4px;
+			top: 2px;
+			width: 3.5px;
 			height: 12px;
 			background: currentColor;
 			border-radius: 1px;
 		}
-		.ico-pause::before { left: 2px; }
-		.ico-pause::after { right: 2px; }
+		.ico-pause::before { left: 3px; }
+		.ico-pause::after { right: 3px; }
 
-		/* Stop (cuadrado CSS) */
-		.ico-stop::before {
+		.ico-restart::before {
 			content: "";
 			position: absolute;
-			top: 2px;
+			inset: 2px;
+			border: 2px solid currentColor;
+			border-left-color: transparent;
+			border-radius: 50%;
+		}
+		.ico-restart::after {
+			content: "";
+			position: absolute;
+			top: 1px;
 			left: 2px;
-			width: 10px;
-			height: 10px;
-			background: currentColor;
-			border-radius: 1px;
+			width: 0;
+			height: 0;
+			border-top: 4px solid transparent;
+			border-bottom: 4px solid transparent;
+			border-right: 5px solid currentColor;
 		}
 
-		/* Audio / Altavoz (trapecio + onda CSS) */
 		.ico-volume::before {
 			content: "";
 			position: absolute;
-			top: 3px;
-			left: 1px;
-			width: 5px;
+			top: 4px;
+			left: 2px;
+			width: 6px;
 			height: 8px;
 			background: currentColor;
-			clip-path: polygon(0 25%, 45% 25%, 100% 0, 100% 100%, 45% 75%, 0 75%);
+			clip-path: polygon(0 28%, 45% 28%, 100% 0, 100% 100%, 45% 72%, 0 72%);
 		}
 		.ico-volume::after {
 			content: "";
 			position: absolute;
-			top: 2px;
-			right: 1px;
+			top: 3px;
+			right: 2px;
 			width: 5px;
 			height: 10px;
-			border-right: 2px solid currentColor;
-			border-top: 2px solid transparent;
-			border-bottom: 2px solid transparent;
+			border-right: 1.8px solid currentColor;
 			border-radius: 50%;
 		}
 
-		/* Mute (altavoz + línea diagonal CSS) */
 		.ico-mute::before {
 			content: "";
 			position: absolute;
-			top: 3px;
-			left: 1px;
+			top: 4px;
+			left: 2px;
 			width: 6px;
 			height: 8px;
 			background: currentColor;
-			clip-path: polygon(0 25%, 45% 25%, 100% 0, 100% 100%, 45% 75%, 0 75%);
+			clip-path: polygon(0 28%, 45% 28%, 100% 0, 100% 100%, 45% 72%, 0 72%);
 		}
 		.ico-mute::after {
 			content: "";
 			position: absolute;
-			top: 6px;
-			right: 0;
+			top: 7px;
+			right: 1px;
 			width: 7px;
-			height: 2px;
-			background: #f87171;
+			height: 1.8px;
+			background: currentColor;
 			transform: rotate(-45deg);
 		}
 
-		/* Loop A-B (rectángulo con bordes de retorno CSS) */
-		.ico-loop::before {
-			content: "";
-			position: absolute;
-			inset: 2px 1px;
-			border: 2px solid currentColor;
-			border-radius: 4px;
-		}
-		.ico-loop::after {
-			content: "";
-			position: absolute;
-			top: 0;
-			right: 3px;
-			width: 4px;
-			height: 4px;
-			border-top: 2px solid currentColor;
-			border-right: 2px solid currentColor;
-			transform: rotate(45deg);
-		}
-
-		/* Intérprete LSC (marco de persona/señas en CSS) */
-		.ico-lsc::before {
-			content: "";
-			position: absolute;
-			top: 1px;
-			left: 4px;
-			width: 6px;
-			height: 6px;
-			border: 2px solid currentColor;
-			border-radius: 50%;
-		}
-		.ico-lsc::after {
-			content: "";
-			position: absolute;
-			bottom: 1px;
-			left: 2px;
-			width: 10px;
-			height: 5px;
-			border: 2px solid currentColor;
-			border-bottom: 0;
-			border-radius: 5px 5px 0 0;
-		}
-
-		/* Vista Lado a Lado (dos columnas CSS) */
 		.ico-split::before,
 		.ico-split::after {
 			content: "";
 			position: absolute;
 			top: 2px;
-			width: 6px;
-			height: 10px;
-			border: 1.8px solid currentColor;
+			width: 6.5px;
+			height: 12px;
+			border: 1.6px solid currentColor;
 			border-radius: 2px;
 		}
-		.ico-split::before { left: 0; }
-		.ico-split::after { right: 0; }
+		.ico-split::before { left: 1px; }
+		.ico-split::after { right: 1px; }
 
-		/* Subtítulos CC (recuadro con dos líneas inferiores CSS) */
-		.ico-cc::before {
-			content: "";
-			position: absolute;
-			inset: 1px 0;
-			border: 1.8px solid currentColor;
-			border-radius: 3px;
-		}
-		.ico-cc::after {
-			content: "";
-			position: absolute;
-			bottom: 4px;
-			left: 3px;
-			right: 3px;
-			height: 2px;
-			background: currentColor;
-		}
-
-		/* Pantalla completa (esquinas enmarcadas CSS) */
 		.ico-fullscreen::before {
 			content: "";
 			position: absolute;
-			inset: 1px;
-			border: 2px solid currentColor;
-			clip-path: polygon(0 0, 35% 0, 35% 25%, 100% 25%, 100% 0, 100% 35%, 75% 35%, 75% 65%, 100% 65%, 100% 100%, 65% 100%, 65% 75%, 35% 75%, 35% 100%, 0 100%, 0 65%, 25% 65%, 25% 35%, 0 35%);
+			inset: 2px;
+			border: 1.8px solid currentColor;
+			clip-path: polygon(0 0, 36% 0, 36% 24%, 100% 24%, 100% 0, 100% 36%, 76% 36%, 76% 64%, 100% 64%, 100% 100%, 64% 100%, 64% 76%, 36% 76%, 36% 100%, 0 100%, 0 64%, 24% 64%, 24% 36%, 0 36%);
 		}
 
-		/* Glosario / Libro (dos páginas CSS) */
 		.ico-book::before {
 			content: "";
 			position: absolute;
-			inset: 1px 1px;
-			border: 1.8px solid currentColor;
+			inset: 2px;
+			border: 1.6px solid currentColor;
 			border-radius: 2px;
 		}
 		.ico-book::after {
 			content: "";
 			position: absolute;
-			top: 2px;
-			bottom: 2px;
-			left: 6px;
-			width: 1.8px;
+			top: 3px;
+			bottom: 3px;
+			left: 7px;
+			width: 1.5px;
 			background: currentColor;
 		}
 
-		/* Práctica / Diana (dos círculos concéntricos CSS) */
-		.ico-quiz::before {
-			content: "";
-			position: absolute;
-			inset: 1px;
-			border: 2px solid currentColor;
-			border-radius: 50%;
-		}
-		.ico-quiz::after {
-			content: "";
-			position: absolute;
-			inset: 5px;
-			background: currentColor;
-			border-radius: 50%;
-		}
-
-		/* Enlace externo (flecha diagonal CSS) */
 		.ico-external::before {
 			content: "";
 			position: absolute;
-			top: 2px;
-			right: 2px;
-			width: 7px;
-			height: 7px;
-			border-top: 2px solid currentColor;
-			border-right: 2px solid currentColor;
+			top: 3px;
+			right: 3px;
+			width: 6px;
+			height: 6px;
+			border-top: 1.8px solid currentColor;
+			border-right: 1.8px solid currentColor;
 		}
 		.ico-external::after {
 			content: "";
 			position: absolute;
-			top: 5px;
-			left: 2px;
-			width: 9px;
-			height: 2px;
+			top: 6px;
+			left: 3px;
+			width: 8px;
+			height: 1.8px;
 			background: currentColor;
 			transform: rotate(-45deg);
 		}
 
-		/* Cambiar esquina (cruz de posición CSS) */
-		.ico-corner::before {
-			content: "";
-			position: absolute;
-			inset: 2px;
-			border: 1.6px dashed currentColor;
-		}
-		.ico-corner::after {
-			content: "";
-			position: absolute;
-			right: 2px;
-			bottom: 2px;
-			width: 5px;
-			height: 5px;
-			background: currentColor;
-		}
-
-		/* Cerrar (X en CSS) */
 		.ico-close::before,
 		.ico-close::after {
 			content: "";
 			position: absolute;
-			top: 6px;
-			left: 1px;
+			top: 7px;
+			left: 2px;
 			width: 12px;
-			height: 2px;
+			height: 1.8px;
 			background: currentColor;
 		}
 		.ico-close::before { transform: rotate(45deg); }
@@ -309,10 +213,11 @@
 			left: -9999px;
 			top: 8px;
 			z-index: 9999;
-			background: var(--focus-ring);
-			color: #000000;
-			padding: 10px 16px;
-			font-weight: 700;
+			background: var(--text-primary);
+			color: #ffffff;
+			padding: 8px 14px;
+			font-size: 0.85rem;
+			font-weight: 600;
 			border-radius: 6px;
 			text-decoration: none;
 		}
@@ -321,10 +226,16 @@
 			left: 12px;
 		}
 
+		/* Cabecera minimalista */
 		header.app-header {
-			background: rgba(15, 23, 42, 0.94);
-			border-bottom: 1px solid var(--border);
+			background: var(--bg-surface);
+			border-bottom: 1px solid var(--border-light);
 			padding: 12px 24px;
+		}
+
+		.header-inner {
+			max-width: 1120px;
+			margin: 0 auto;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
@@ -334,44 +245,67 @@
 
 		.app-title {
 			margin: 0;
-			font-size: 1.25rem;
+			font-size: 1.05rem;
 			font-weight: 700;
+			color: var(--text-primary);
 			display: flex;
 			align-items: center;
 			gap: 10px;
+			letter-spacing: -0.01em;
 		}
 
 		.badge-lsc {
-			background: var(--accent);
-			color: #0f172a;
-			font-size: 0.78rem;
-			font-weight: 800;
-			padding: 3px 8px;
-			border-radius: 999px;
-			text-transform: uppercase;
+			background: #f4f4f5;
+			color: var(--text-secondary);
+			border: 1px solid var(--border-light);
+			font-size: 0.72rem;
+			font-weight: 600;
+			padding: 2px 8px;
+			border-radius: 6px;
 		}
 
 		.header-actions {
 			display: flex;
 			align-items: center;
-			flex-wrap: wrap;
-			gap: 10px;
+			gap: 8px;
+		}
+
+		.header-btn {
+			background: var(--bg-surface);
+			color: var(--text-primary);
+			border: 1px solid var(--border-light);
+			border-radius: 8px;
+			padding: 7px 12px;
+			font-size: 0.84rem;
+			font-weight: 500;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 6px;
+			text-decoration: none;
+			transition: background 0.15s ease, border-color 0.15s ease;
+		}
+
+		.header-btn:hover {
+			background: #f4f4f5;
+			border-color: #d4d4d8;
 		}
 
 		main.player-wrapper {
-			max-width: 1160px;
+			max-width: 1120px;
 			width: 100%;
-			margin: 20px auto;
-			padding: 0 16px 32px;
+			margin: 24px auto;
+			padding: 0 16px 40px;
 			flex: 1;
 		}
 
+		/* Contenedor del reproductor de video */
 		.player-card {
-			background: rgba(15, 23, 42, 0.96);
-			border: 2px solid var(--border);
-			border-radius: 14px;
+			background: var(--bg-player);
+			border-radius: 12px;
 			overflow: hidden;
-			box-shadow: 0 20px 45px rgba(0, 0, 0, 0.45);
+			box-shadow: 0 10px 30px rgba(0, 0, 0, 0.12);
+			border: 1px solid rgba(0, 0, 0, 0.08);
 		}
 
 		.player-card:fullscreen {
@@ -399,13 +333,12 @@
 			aspect-ratio: auto;
 		}
 
-		/* Modo Lado a Lado (Side-by-Side) para que el intérprete no tape la pizarra */
 		.video-stage.is-side-by-side {
 			display: grid;
 			grid-template-columns: 1fr 340px;
-			gap: 8px;
-			padding: 8px 8px 68px;
-			background: #0f172a;
+			gap: 1px;
+			padding-bottom: 60px;
+			background: #18181b;
 		}
 
 		@media (max-width: 820px) {
@@ -420,54 +353,32 @@
 			height: 100%;
 			object-fit: contain;
 			background: #ffffff;
-			border-radius: 6px;
+			cursor: pointer;
 		}
 
+		/* Ventana flotante del intérprete (PiP limpia y discreta) */
 		.interpreter-pip {
 			position: absolute;
-			width: 26%;
+			width: 25%;
 			min-width: 180px;
-			max-width: 340px;
-			background: #0f172a;
-			border: 3px solid var(--accent-active);
-			border-radius: 10px;
+			max-width: 320px;
+			background: #18181b;
+			border: 1px solid rgba(255, 255, 255, 0.22);
+			border-radius: 8px;
 			overflow: hidden;
-			box-shadow: 0 10px 28px rgba(0, 0, 0, 0.55);
+			box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4);
 			transition: width 0.2s ease;
 			z-index: 10;
 		}
 
-		.interpreter-pip.pos-bottom-right {
-			right: 16px;
-			bottom: 72px;
-			left: auto;
-			top: auto;
-		}
-
-		.interpreter-pip.pos-bottom-left {
-			left: 16px;
-			bottom: 72px;
-			right: auto;
-			top: auto;
-		}
-
-		.interpreter-pip.pos-top-right {
-			right: 16px;
-			top: 16px;
-			left: auto;
-			bottom: auto;
-		}
-
-		.interpreter-pip.pos-top-left {
-			left: 16px;
-			top: 16px;
-			right: auto;
-			bottom: auto;
-		}
+		.interpreter-pip.pos-bottom-right { right: 16px; bottom: 68px; }
+		.interpreter-pip.pos-bottom-left { left: 16px; bottom: 68px; }
+		.interpreter-pip.pos-top-right { right: 16px; top: 16px; }
+		.interpreter-pip.pos-top-left { left: 16px; top: 16px; }
 
 		.interpreter-pip.is-large {
-			width: 42%;
-			max-width: 480px;
+			width: 40%;
+			max-width: 460px;
 		}
 
 		.video-stage.is-side-by-side .interpreter-pip {
@@ -475,6 +386,9 @@
 			width: 100% !important;
 			max-width: none !important;
 			height: 100%;
+			border: 0;
+			border-radius: 0;
+			box-shadow: none;
 			display: flex;
 			flex-direction: column;
 			justify-content: center;
@@ -485,15 +399,15 @@
 		}
 
 		.interpreter-header {
-			background: rgba(15, 23, 42, 0.92);
-			color: var(--text-light);
-			font-size: 0.78rem;
-			font-weight: 700;
-			padding: 5px 8px;
+			background: #18181b;
+			color: var(--text-muted-dark);
+			font-size: 0.72rem;
+			font-weight: 600;
+			padding: 4px 8px;
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
-			gap: 4px;
+			border-bottom: 1px solid var(--border-dark);
 		}
 
 		.interpreter-pip-actions {
@@ -502,21 +416,18 @@
 			gap: 4px;
 		}
 
-		.interpreter-size-btn {
-			background: #1e293b;
-			color: var(--text-light);
-			border: 1px solid #64748b;
+		.pip-mini-btn {
+			background: transparent;
+			color: var(--text-on-dark);
+			border: 1px solid #3f3f46;
 			border-radius: 4px;
-			font-size: 0.72rem;
-			padding: 2px 6px;
+			font-size: 0.68rem;
+			padding: 1px 6px;
 			cursor: pointer;
-			display: inline-flex;
-			align-items: center;
-			gap: 4px;
 		}
 
-		.interpreter-size-btn:hover {
-			background: #334155;
+		.pip-mini-btn:hover {
+			background: #27272a;
 		}
 
 		#interpreteVideo {
@@ -525,20 +436,22 @@
 			background: #ffffff;
 		}
 
+		/* Franja de subtítulos limpia */
 		.cc-strip {
 			position: absolute;
-			left: 16px;
-			right: 16px;
+			left: 24px;
+			right: 24px;
 			bottom: 10px;
-			height: 54px;
+			height: 50px;
 			background: rgba(255, 255, 255, 0.96);
-			border: 2px solid var(--accent);
-			border-radius: 8px;
+			border: 1px solid #d4d4d8;
+			border-radius: 6px;
 			overflow: hidden;
 			display: flex;
 			align-items: center;
 			justify-content: center;
 			z-index: 9;
+			box-shadow: 0 4px 12px rgba(0, 0, 0, 0.18);
 		}
 
 		.cc-strip[hidden] {
@@ -551,95 +464,180 @@
 			object-fit: contain;
 		}
 
-		.timeline-bar {
-			padding: 12px 18px 4px;
-			background: var(--bg-panel);
+		/* Barra de progreso continua estilo reproductor estándar */
+		.player-chrome {
+			background: var(--bg-controls);
+			color: var(--text-on-dark);
+			padding: 0 14px 10px;
+			user-select: none;
+		}
+
+		.scrubber-row {
+			padding: 8px 2px 4px;
 			display: flex;
 			align-items: center;
-			gap: 12px;
 		}
 
 		.timeline-slider {
-			flex: 1;
+			width: 100%;
+			height: 5px;
 			accent-color: var(--accent);
-			height: 8px;
 			cursor: pointer;
+			margin: 0;
 		}
 
-		.time-display {
-			font-variant-numeric: tabular-nums;
-			font-size: 0.9rem;
-			font-weight: 600;
-			color: var(--text-muted);
-			min-width: 105px;
-			text-align: right;
-		}
-
-		.controls-bar {
-			padding: 12px 18px 16px;
-			background: var(--bg-panel);
+		/* Barra de controles familiar (Izquierda: Play, Reiniciar, Volumen, Tiempo | Derecha: Velocidad, A-B, CC, LSC, Vista, Fullscreen) */
+		.controls-row {
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
 			flex-wrap: wrap;
-			gap: 12px;
+			gap: 8px;
+			min-height: 40px;
 		}
 
-		.control-group {
+		.controls-left,
+		.controls-right {
 			display: flex;
 			align-items: center;
+			gap: 6px;
 			flex-wrap: wrap;
-			gap: 8px;
 		}
 
-		.ctrl-btn {
-			background: #0f172a;
-			color: var(--text-light);
-			border: 2px solid #475569;
-			border-radius: 8px;
-			padding: 8px 12px;
-			font-size: 0.88rem;
-			font-weight: 600;
+		/* Botón de icono familiar de reproductor */
+		.player-icon-btn {
+			background: transparent;
+			color: var(--text-on-dark);
+			border: 1px solid transparent;
+			border-radius: 6px;
+			width: 36px;
+			height: 36px;
+			padding: 0;
 			cursor: pointer;
 			display: inline-flex;
 			align-items: center;
-			gap: 7px;
-			text-decoration: none;
-			transition: background 0.15s ease, border-color 0.15s ease;
+			justify-content: center;
+			transition: background 0.15s ease;
 		}
 
-		.ctrl-btn:hover {
-			background: #334155;
-			border-color: var(--accent);
+		.player-icon-btn.play-primary {
+			background: rgba(255, 255, 255, 0.1);
 		}
 
-		.ctrl-btn[aria-pressed="true"] {
-			background: #065f46;
-			border-color: var(--accent-active);
+		.player-icon-btn:hover {
+			background: rgba(255, 255, 255, 0.16);
+		}
+
+		.player-icon-btn[aria-pressed="true"] {
 			color: #ffffff;
+			background: rgba(255, 255, 255, 0.14);
 		}
 
-		.ctrl-btn:focus-visible,
+		.time-display {
+			font-variant-numeric: tabular-nums;
+			font-size: 0.82rem;
+			font-weight: 500;
+			color: var(--text-muted-dark);
+			padding: 0 8px;
+			white-space: nowrap;
+		}
+
+		/* Botones tipo insignia de reproductor (CC, LSC, A-B) con indicador inferior activo estilo YouTube */
+		.player-badge-btn {
+			position: relative;
+			background: transparent;
+			color: var(--text-muted-dark);
+			border: 1px solid transparent;
+			border-radius: 6px;
+			height: 34px;
+			padding: 0 10px;
+			font-size: 0.78rem;
+			font-weight: 600;
+			letter-spacing: 0.02em;
+			cursor: pointer;
+			display: inline-flex;
+			align-items: center;
+			gap: 5px;
+			transition: color 0.15s ease, background 0.15s ease;
+		}
+
+		.player-badge-btn:hover {
+			color: var(--text-on-dark);
+			background: rgba(255, 255, 255, 0.1);
+		}
+
+		.player-badge-btn[aria-pressed="true"] {
+			color: var(--text-on-dark);
+		}
+
+		.player-badge-btn[aria-pressed="true"]::after {
+			content: "";
+			position: absolute;
+			left: 8px;
+			right: 8px;
+			bottom: 3px;
+			height: 2.5px;
+			background: var(--accent);
+			border-radius: 2px;
+		}
+
+		/* Control segmentado compacto de velocidad */
+		.speed-segmented {
+			display: inline-flex;
+			align-items: center;
+			background: #09090b;
+			border: 1px solid var(--border-dark);
+			border-radius: 6px;
+			padding: 2px;
+		}
+
+		.speed-btn {
+			background: transparent;
+			color: var(--text-muted-dark);
+			border: 0;
+			border-radius: 4px;
+			height: 26px;
+			padding: 0 8px;
+			font-size: 0.75rem;
+			font-weight: 600;
+			cursor: pointer;
+			transition: background 0.15s ease, color 0.15s ease;
+		}
+
+		.speed-btn:hover {
+			color: var(--text-on-dark);
+		}
+
+		.speed-btn[aria-pressed="true"] {
+			background: #27272a;
+			color: var(--text-on-dark);
+		}
+
+		.divider-v {
+			width: 1px;
+			height: 18px;
+			background: var(--border-dark);
+			margin: 0 2px;
+		}
+
+		.player-icon-btn:focus-visible,
+		.player-badge-btn:focus-visible,
+		.speed-btn:focus-visible,
 		.timeline-slider:focus-visible,
-		.interpreter-size-btn:focus-visible,
+		.pip-mini-btn:focus-visible,
+		.header-btn:focus-visible,
 		.chip-btn:focus-visible {
-			outline: 3px solid var(--focus-ring);
+			outline: 2px solid var(--focus-ring);
 			outline-offset: 2px;
 		}
 
-		.speed-label {
-			font-size: 0.85rem;
-			font-weight: 700;
-			color: var(--text-muted);
-			margin-right: 2px;
-		}
-
-		.sr-status {
-			padding: 8px 18px 12px;
-			background: var(--bg-panel);
-			border-top: 1px solid var(--border);
-			font-size: 0.84rem;
-			color: var(--text-muted);
+		/* Pie discreto de estado y atajos */
+		.player-statusbar {
+			padding: 8px 16px;
+			background: #121215;
+			border-top: 1px solid var(--border-dark);
+			font-size: 0.78rem;
+			color: var(--text-muted-dark);
 			display: flex;
 			justify-content: space-between;
 			flex-wrap: wrap;
@@ -647,28 +645,35 @@
 		}
 
 		kbd {
-			background: #0f172a;
-			border: 1px solid #475569;
-			border-radius: 4px;
+			background: #27272a;
+			color: #e4e4e7;
+			border-radius: 3px;
 			padding: 1px 5px;
-			font-size: 0.76rem;
+			font-size: 0.72rem;
+			font-family: inherit;
 		}
 
+		/* Panel limpio de conceptos de la lección */
 		.concepts-panel {
-			margin-top: 18px;
-			background: rgba(15, 23, 42, 0.94);
-			border: 2px solid var(--border);
-			border-radius: 14px;
-			padding: 16px 20px;
+			margin-top: 20px;
+			background: var(--bg-surface);
+			border: 1px solid var(--border-light);
+			border-radius: 12px;
+			padding: 18px 20px;
+		}
+
+		.concepts-header {
+			display: flex;
+			align-items: center;
+			justify-content: space-between;
+			margin-bottom: 12px;
 		}
 
 		.concepts-panel h2 {
-			margin: 0 0 10px;
-			font-size: 1.05rem;
-			color: var(--text-light);
-			display: flex;
-			align-items: center;
-			gap: 8px;
+			margin: 0;
+			font-size: 0.92rem;
+			font-weight: 600;
+			color: var(--text-secondary);
 		}
 
 		.concepts-chips {
@@ -678,96 +683,93 @@
 		}
 
 		.chip-btn {
-			background: #1e293b;
-			color: var(--text-light);
-			border: 1px solid #475569;
-			border-radius: 999px;
-			padding: 6px 14px;
-			font-size: 0.86rem;
-			font-weight: 600;
+			background: #fafafa;
+			color: var(--text-primary);
+			border: 1px solid var(--border-light);
+			border-radius: 8px;
+			padding: 6px 12px;
+			font-size: 0.84rem;
+			font-weight: 500;
 			cursor: pointer;
-			display: inline-flex;
-			align-items: center;
-			gap: 6px;
 			transition: background 0.15s ease, border-color 0.15s ease;
 		}
 
 		.chip-btn:hover {
-			background: #0284c7;
-			border-color: #38bdf8;
-			color: #ffffff;
+			background: #f4f4f5;
+			border-color: #a1a1aa;
 		}
 
 		dialog.glossary-modal {
 			width: min(980px, 95vw);
 			height: min(780px, 90vh);
-			border: 2px solid var(--accent);
+			border: 1px solid var(--border-light);
 			border-radius: 12px;
 			padding: 0;
-			background: var(--bg-page);
-			color: var(--text-light);
-			box-shadow: 0 24px 60px rgba(0, 0, 0, 0.7);
+			background: var(--bg-surface);
+			color: var(--text-primary);
+			box-shadow: 0 24px 60px rgba(0, 0, 0, 0.28);
 		}
 
 		dialog.glossary-modal::backdrop {
-			background: rgba(15, 23, 42, 0.75);
+			background: rgba(9, 9, 11, 0.6);
 		}
 
 		.modal-header {
 			padding: 12px 18px;
-			background: var(--bg-panel);
-			border-bottom: 1px solid var(--border);
+			background: var(--bg-surface);
+			border-bottom: 1px solid var(--border-light);
 			display: flex;
 			align-items: center;
 			justify-content: space-between;
+			font-size: 0.95rem;
 		}
 
 		.modal-iframe {
 			width: 100%;
-			height: calc(100% - 58px);
+			height: calc(100% - 54px);
 			border: 0;
-			background: #ffffff;
+			background: var(--bg-app);
 		}
 	</style>
 </head>
 
 <body>
-	<a class="skip-link" href="#reproductorPrincipal">Saltar al reproductor multimedia</a>
+	<a class="skip-link" href="#reproductorPrincipal">Saltar al reproductor</a>
 
 	<header class="app-header">
-		<h1 class="app-title">
-			<span>Reproductor Educativo LSC</span>
-			<span class="badge-lsc">Lengua de Señas Colombiana</span>
-		</h1>
-		<div class="header-actions">
-			<button
-				id="btnOpenGlossaryModal"
-				type="button"
-				class="ctrl-btn"
-				aria-haspopup="dialog"
-			>
-				<span class="ico ico-book" aria-hidden="true"></span>
-				<span>Glosario Matemático LSC</span>
-			</button>
-			<button
-				id="btnOpenQuizModal"
-				type="button"
-				class="ctrl-btn"
-				aria-haspopup="dialog"
-			>
-				<span class="ico ico-quiz" aria-hidden="true"></span>
-				<span>Practicar Señas LSC</span>
-			</button>
-			<a
-				href="glosario/index.html"
-				target="_blank"
-				rel="noopener"
-				class="ctrl-btn"
-				aria-label="Abrir Glosario Matemático LSC en una pestaña nueva"
-			>
-				<span class="ico ico-external" aria-hidden="true"></span>
-				<span>Abrir en pestaña</span>
-			</a>
+		<div class="header-inner">
+			<h1 class="app-title">
+				<span>Reproductor Educativo LSC</span>
+				<span class="badge-lsc">Lengua de Señas Colombiana</span>
+			</h1>
+			<div class="header-actions">
+				<button
+					id="btnOpenGlossaryModal"
+					type="button"
+					class="header-btn"
+					aria-haspopup="dialog"
+				>
+					<span class="ico ico-book" aria-hidden="true"></span>
+					<span>Glosario</span>
+				</button>
+				<button
+					id="btnOpenQuizModal"
+					type="button"
+					class="header-btn"
+					aria-haspopup="dialog"
+				>
+					<span>Practicar señas</span>
+				</button>
+				<a
+					href="glosario/index.html"
+					target="_blank"
+					rel="noopener"
+					class="header-btn"
+					aria-label="Abrir Glosario Matemático LSC en una pestaña nueva"
+				>
+					<span class="ico ico-external" aria-hidden="true"></span>
+				</a>
+			</div>
 		</div>
 	</header>
 
@@ -778,6 +780,7 @@
 					id="teoriaVideo"
 					preload="auto"
 					playsinline
+					title="Clic para reproducir o pausar"
 					aria-label="Video principal de la clase de matemáticas"
 				>
 					<source src="media/teoria.mp4" type="video/mp4" />
@@ -790,25 +793,21 @@
 					aria-label="Ventana de intérprete en Lengua de Señas Colombiana"
 				>
 					<div class="interpreter-header">
-						<span>
-							<span class="ico ico-lsc" aria-hidden="true"></span>
-							Intérprete LSC
-						</span>
+						<span>Intérprete LSC</span>
 						<div class="interpreter-pip-actions">
 							<button
 								id="btnCycleCorner"
 								type="button"
-								class="interpreter-size-btn"
-								title="Cambiar esquina del intérprete"
+								class="pip-mini-btn"
+								title="Mover a otra esquina"
 								aria-label="Cambiar esquina de la ventana del intérprete LSC"
 							>
-								<span class="ico ico-corner" aria-hidden="true"></span>
-								<span>Esquina</span>
+								Posición
 							</button>
 							<button
 								id="btnTogglePipSize"
 								type="button"
-								class="interpreter-size-btn"
+								class="pip-mini-btn"
 								aria-pressed="false"
 								aria-label="Ampliar o reducir tamaño del video del intérprete LSC"
 							>
@@ -844,163 +843,176 @@
 				</div>
 			</div>
 
-			<div class="timeline-bar">
-				<input
-					id="seekSlider"
-					type="range"
-					class="timeline-slider"
-					min="0"
-					max="100"
-					step="0.1"
-					value="0"
-					aria-label="Progreso de la lección en segundos"
-				/>
-				<span id="timeDisplay" class="time-display" aria-live="off">00:00 / 00:00</span>
+			<!-- Barra de controles unificada estilo reproductor moderno (YouTube / Plyr) -->
+			<div class="player-chrome">
+				<div class="scrubber-row">
+					<input
+						id="seekSlider"
+						type="range"
+						class="timeline-slider"
+						min="0"
+						max="100"
+						step="0.1"
+						value="0"
+						aria-label="Línea de tiempo de la lección"
+					/>
+				</div>
+
+				<div class="controls-row" role="toolbar" aria-label="Controles de reproducción">
+					<!-- Izquierda: Play/Pausa, Reiniciar, Audio y Tiempo -->
+					<div class="controls-left">
+						<button
+							id="btnPlayPause"
+							type="button"
+							class="player-icon-btn play-primary"
+							title="Reproducir / Pausar (Espacio)"
+							aria-label="Reproducir lección"
+						>
+							<span id="playPauseIcon" class="ico ico-play" aria-hidden="true"></span>
+						</button>
+
+						<button
+							id="btnStop"
+							type="button"
+							class="player-icon-btn"
+							title="Reiniciar desde el principio"
+							aria-label="Reiniciar lección"
+						>
+							<span class="ico ico-restart" aria-hidden="true"></span>
+						</button>
+
+						<button
+							id="btnMute"
+							type="button"
+							class="player-icon-btn"
+							aria-pressed="false"
+							title="Silenciar / Activar audio (M)"
+							aria-label="Silenciar audio"
+						>
+							<span id="muteIcon" class="ico ico-volume" aria-hidden="true"></span>
+						</button>
+
+						<span id="timeDisplay" class="time-display" aria-live="off">00:00 / 00:00</span>
+					</div>
+
+					<!-- Derecha: Velocidad, Tramo A-B, Subtítulos CC, Intérprete LSC, Vista dividida y Pantalla completa -->
+					<div class="controls-right">
+						<div class="speed-segmented" role="group" aria-label="Velocidad de reproducción">
+							<button
+								type="button"
+								class="speed-btn"
+								data-rate="0.25"
+								aria-pressed="false"
+								title="Velocidad 0.25x"
+								aria-label="Velocidad 25 por ciento"
+							>
+								0.25×
+							</button>
+							<button
+								type="button"
+								class="speed-btn"
+								data-rate="0.5"
+								aria-pressed="false"
+								title="Velocidad 0.5x"
+								aria-label="Velocidad 50 por ciento"
+							>
+								0.5×
+							</button>
+							<button
+								type="button"
+								class="speed-btn"
+								data-rate="1"
+								aria-pressed="true"
+								title="Velocidad normal 1x"
+								aria-label="Velocidad normal 100 por ciento"
+							>
+								1×
+							</button>
+						</div>
+
+						<button
+							id="btnLoopAB"
+							type="button"
+							class="player-badge-btn"
+							aria-pressed="false"
+							title="Repetir un fragmento A-B en bucle"
+							aria-label="Repetir tramo A-B en bucle"
+						>
+							<span id="loopABText">A-B</span>
+						</button>
+
+						<div class="divider-v" aria-hidden="true"></div>
+
+						<button
+							id="btnToggleCC"
+							type="button"
+							class="player-badge-btn"
+							aria-pressed="true"
+							title="Subtítulos (C)"
+							aria-label="Mostrar u ocultar subtítulos"
+						>
+							<span>CC</span>
+						</button>
+
+						<button
+							id="btnToggleInterpreter"
+							type="button"
+							class="player-badge-btn"
+							aria-pressed="true"
+							title="Intérprete en Lengua de Señas Colombiana (I)"
+							aria-label="Mostrar u ocultar intérprete LSC"
+						>
+							<span>LSC</span>
+						</button>
+
+						<button
+							id="btnToggleSideBySide"
+							type="button"
+							class="player-icon-btn"
+							aria-pressed="false"
+							title="Vista lado a lado sin superposición (L)"
+							aria-label="Alternar vista lado a lado entre pizarra e intérprete LSC"
+						>
+							<span class="ico ico-split" aria-hidden="true"></span>
+						</button>
+
+						<button
+							id="btnFullscreen"
+							type="button"
+							class="player-icon-btn"
+							title="Pantalla completa (F)"
+							aria-label="Alternar pantalla completa"
+						>
+							<span class="ico ico-fullscreen" aria-hidden="true"></span>
+						</button>
+					</div>
+				</div>
 			</div>
 
-			<div class="controls-bar" role="toolbar" aria-label="Controles del reproductor accesible">
-				<div class="control-group">
-					<button
-						id="btnPlayPause"
-						type="button"
-						class="ctrl-btn"
-						aria-label="Reproducir lección"
-					>
-						<span id="playPauseIcon" class="ico ico-play" aria-hidden="true"></span>
-						<span id="playPauseText">Reproducir</span>
-					</button>
-					<button
-						id="btnStop"
-						type="button"
-						class="ctrl-btn"
-						aria-label="Detener y reiniciar lección"
-					>
-						<span class="ico ico-stop" aria-hidden="true"></span>
-						<span>Detener</span>
-					</button>
-					<button
-						id="btnMute"
-						type="button"
-						class="ctrl-btn"
-						aria-pressed="false"
-						aria-label="Silenciar audio"
-					>
-						<span id="muteIcon" class="ico ico-volume" aria-hidden="true"></span>
-						<span id="muteText">Audio</span>
-					</button>
-					<button
-						id="btnLoopAB"
-						type="button"
-						class="ctrl-btn"
-						aria-pressed="false"
-						title="Repetir un tramo específico de la clase para practicar la seña"
-						aria-label="Marcar tramo A-B para repetir en bucle"
-					>
-						<span class="ico ico-loop" aria-hidden="true"></span>
-						<span id="loopABText">Tramo A-B</span>
-					</button>
-				</div>
-
-				<div class="control-group" role="group" aria-label="Velocidad de reproducción">
-					<span class="speed-label">Velocidad:</span>
-					<button
-						type="button"
-						class="ctrl-btn speed-btn"
-						data-rate="0.25"
-						aria-pressed="false"
-						aria-label="Velocidad 25 por ciento"
-					>
-						25%
-					</button>
-					<button
-						type="button"
-						class="ctrl-btn speed-btn"
-						data-rate="0.5"
-						aria-pressed="false"
-						aria-label="Velocidad 50 por ciento"
-					>
-						50%
-					</button>
-					<button
-						type="button"
-						class="ctrl-btn speed-btn"
-						data-rate="1"
-						aria-pressed="true"
-						aria-label="Velocidad normal 100 por ciento"
-					>
-						100%
-					</button>
-				</div>
-
-				<div class="control-group" role="group" aria-label="Opciones de accesibilidad y visualización">
-					<button
-						id="btnToggleInterpreter"
-						type="button"
-						class="ctrl-btn"
-						aria-pressed="true"
-						aria-label="Mostrar u ocultar intérprete LSC"
-					>
-						<span class="ico ico-lsc" aria-hidden="true"></span>
-						<span>Intérprete LSC</span>
-					</button>
-					<button
-						id="btnToggleSideBySide"
-						type="button"
-						class="ctrl-btn"
-						aria-pressed="false"
-						title="Colocar pizarra e intérprete LSC lado a lado sin superposición"
-						aria-label="Alternar vista lado a lado entre pizarra e intérprete LSC"
-					>
-						<span class="ico ico-split" aria-hidden="true"></span>
-						<span>Lado a Lado</span>
-					</button>
-					<button
-						id="btnToggleCC"
-						type="button"
-						class="ctrl-btn"
-						aria-pressed="true"
-						aria-label="Mostrar u ocultar subtítulos"
-					>
-						<span class="ico ico-cc" aria-hidden="true"></span>
-						<span>Subtítulos (CC)</span>
-					</button>
-					<button
-						id="btnFullscreen"
-						type="button"
-						class="ctrl-btn"
-						aria-label="Alternar pantalla completa"
-					>
-						<span class="ico ico-fullscreen" aria-hidden="true"></span>
-						<span>Pantalla completa</span>
-					</button>
-				</div>
-			</div>
-
-			<div class="sr-status">
+			<div class="player-statusbar">
 				<span id="statusAnnouncement" role="status" aria-live="polite">
-					Listo para reproducir. Intérprete LSC y subtítulos activados.
+					Listo para reproducir · LSC y subtítulos activos
 				</span>
 				<span>
-					Atajos: <kbd>Espacio</kbd> Play/Pausa · <kbd>I</kbd> Intérprete · <kbd>L</kbd> Lado a lado · <kbd>C</kbd> Subtítulos · <kbd>F</kbd> Pantalla completa · <kbd>G</kbd> Glosario
+					<kbd>Espacio</kbd> Reproducir · <kbd>←</kbd><kbd>→</kbd> ±5s · <kbd>C</kbd> CC · <kbd>I</kbd> LSC · <kbd>L</kbd> Dividir vista · <kbd>F</kbd> Pantalla completa
 				</span>
 			</div>
 		</section>
 
 		<section class="concepts-panel" aria-label="Conceptos matemáticos de la clase en Lengua de Señas Colombiana">
-			<h2>
-				<span class="ico ico-lsc" aria-hidden="true"></span>
-				<span>Consulta rápida de señas matemáticas de esta clase (LSC):</span>
-			</h2>
+			<div class="concepts-header">
+				<h2>Vocabulario matemático de esta lección en LSC</h2>
+			</div>
 			<div id="conceptChipsContainer" class="concepts-chips"></div>
 		</section>
 	</main>
 
 	<dialog id="glossaryDialog" class="glossary-modal" aria-label="Glosario Matemático en Lengua de Señas Colombiana">
 		<div class="modal-header">
-			<strong id="glossaryModalTitle">Glosario Matemático Interactivo (LSC)</strong>
-			<button id="btnCloseGlossaryModal" type="button" class="ctrl-btn" aria-label="Cerrar ventana de glosario">
+			<strong id="glossaryModalTitle">Glosario Matemático (LSC)</strong>
+			<button id="btnCloseGlossaryModal" type="button" class="header-btn" aria-label="Cerrar ventana de glosario">
 				<span class="ico ico-close" aria-hidden="true"></span>
-				<span>Cerrar (Esc)</span>
+				<span>Cerrar</span>
 			</button>
 		</div>
 		<iframe id="glossaryIframe" class="modal-iframe" title="Glosario Matemático LSC"></iframe>
@@ -1039,11 +1051,9 @@
 
 			var btnPlayPause = document.getElementById('btnPlayPause');
 			var playPauseIcon = document.getElementById('playPauseIcon');
-			var playPauseText = document.getElementById('playPauseText');
 			var btnStop = document.getElementById('btnStop');
 			var btnMute = document.getElementById('btnMute');
 			var muteIcon = document.getElementById('muteIcon');
-			var muteText = document.getElementById('muteText');
 			var btnLoopAB = document.getElementById('btnLoopAB');
 			var loopABText = document.getElementById('loopABText');
 			var btnToggleInterpreter = document.getElementById('btnToggleInterpreter');
@@ -1100,9 +1110,8 @@
 				interprete.play().catch(function () {});
 				cc.play().catch(function () {});
 				playPauseIcon.className = 'ico ico-pause';
-				playPauseText.textContent = 'Pausar';
 				btnPlayPause.setAttribute('aria-label', 'Pausar lección');
-				announce('Reproduciendo lección.');
+				announce('Reproduciendo lección');
 			}
 
 			function pauseAll () {
@@ -1110,9 +1119,8 @@
 				interprete.pause();
 				cc.pause();
 				playPauseIcon.className = 'ico ico-play';
-				playPauseText.textContent = 'Reproducir';
 				btnPlayPause.setAttribute('aria-label', 'Reproducir lección');
-				announce('Lección en pausa.');
+				announce('En pausa');
 			}
 
 			function togglePlayPause () {
@@ -1128,16 +1136,15 @@
 				teoria.currentTime = 0;
 				syncCompanionVideos(true);
 				updateTimelineUI();
-				announce('Lección detenida y reiniciada al inicio.');
+				announce('Lección reiniciada');
 			}
 
 			function toggleMute () {
 				teoria.muted = !teoria.muted;
 				btnMute.setAttribute('aria-pressed', String(teoria.muted));
 				muteIcon.className = teoria.muted ? 'ico ico-mute' : 'ico ico-volume';
-				muteText.textContent = teoria.muted ? 'Silenciado' : 'Audio';
 				btnMute.setAttribute('aria-label', teoria.muted ? 'Activar audio' : 'Silenciar audio');
-				announce(teoria.muted ? 'Audio silenciado.' : 'Audio activado.');
+				announce(teoria.muted ? 'Audio silenciado' : 'Audio activado');
 			}
 
 			function handleLoopAB () {
@@ -1145,22 +1152,22 @@
 				if (loopState.pointA === null) {
 					loopState.pointA = now;
 					btnLoopAB.setAttribute('aria-pressed', 'true');
-					loopABText.textContent = 'A: ' + formatTime(now) + ' - B?';
-					announce('Punto inicial A marcado en ' + formatTime(now) + '. Pulsa nuevamente para fijar el punto final B.');
+					loopABText.textContent = 'A: ' + formatTime(now);
+					announce('Inicio A marcado en ' + formatTime(now) + '. Pulsa de nuevo para fijar el final B.');
 				} else if (loopState.pointB === null) {
 					if (now <= loopState.pointA + 0.5) {
 						loopState.pointB = loopState.pointA + 5;
 					} else {
 						loopState.pointB = now;
 					}
-					loopABText.textContent = formatTime(loopState.pointA) + ' - ' + formatTime(loopState.pointB);
-					announce('Repitiendo en bucle el tramo desde ' + formatTime(loopState.pointA) + ' hasta ' + formatTime(loopState.pointB) + '.');
+					loopABText.textContent = formatTime(loopState.pointA) + '–' + formatTime(loopState.pointB);
+					announce('Repitiendo tramo ' + formatTime(loopState.pointA) + ' a ' + formatTime(loopState.pointB));
 				} else {
 					loopState.pointA = null;
 					loopState.pointB = null;
 					btnLoopAB.setAttribute('aria-pressed', 'false');
-					loopABText.textContent = 'Tramo A-B';
-					announce('Bucle de tramo A-B desactivado.');
+					loopABText.textContent = 'A-B';
+					announce('Repetición A-B desactivada');
 				}
 			}
 
@@ -1174,7 +1181,7 @@
 					var active = parseFloat(btn.getAttribute('data-rate')) === numericRate;
 					btn.setAttribute('aria-pressed', String(active));
 				});
-				announce('Velocidad de reproducción ajustada al ' + Math.round(numericRate * 100) + '%.');
+				announce('Velocidad ' + numericRate + 'x');
 			}
 
 			function toggleInterpreter () {
@@ -1183,13 +1190,13 @@
 					interpreterContainer.removeAttribute('hidden');
 					btnToggleInterpreter.setAttribute('aria-pressed', 'true');
 					syncCompanionVideos(true);
-					announce('Ventana de intérprete LSC activada.');
+					announce('Intérprete LSC visible');
 				} else {
 					interpreterContainer.setAttribute('hidden', '');
 					btnToggleInterpreter.setAttribute('aria-pressed', 'false');
 					videoStage.classList.remove('is-side-by-side');
 					btnToggleSideBySide.setAttribute('aria-pressed', 'false');
-					announce('Ventana de intérprete LSC oculta.');
+					announce('Intérprete LSC oculto');
 				}
 			}
 
@@ -1200,16 +1207,14 @@
 				}
 				var active = videoStage.classList.toggle('is-side-by-side');
 				btnToggleSideBySide.setAttribute('aria-pressed', String(active));
-				announce(active
-					? 'Modo vista lado a lado activado: pizarra e intérprete LSC sin superposición.'
-					: 'Modo ventana flotante del intérprete LSC activado.');
+				announce(active ? 'Vista dividida lado a lado activa' : 'Vista flotante activa');
 			}
 
 			function cycleCorner () {
 				interpreterContainer.classList.remove(CORNERS[cornerIndex]);
 				cornerIndex = (cornerIndex + 1) % CORNERS.length;
 				interpreterContainer.classList.add(CORNERS[cornerIndex]);
-				announce('Posición del intérprete LSC cambiada de esquina.');
+				announce('Posición del intérprete cambiada');
 			}
 
 			function toggleCC () {
@@ -1218,11 +1223,11 @@
 					ccContainer.removeAttribute('hidden');
 					btnToggleCC.setAttribute('aria-pressed', 'true');
 					syncCompanionVideos(true);
-					announce('Subtítulos activados.');
+					announce('Subtítulos activos');
 				} else {
 					ccContainer.setAttribute('hidden', '');
 					btnToggleCC.setAttribute('aria-pressed', 'false');
-					announce('Subtítulos ocultos.');
+					announce('Subtítulos ocultos');
 				}
 			}
 
@@ -1231,10 +1236,8 @@
 					if (playerCard.requestFullscreen) {
 						playerCard.requestFullscreen().catch(function () {});
 					}
-					announce('Modo pantalla completa activado.');
 				} else if (document.exitFullscreen) {
 					document.exitFullscreen().catch(function () {});
-					announce('Modo pantalla completa desactivado.');
 				}
 			}
 
@@ -1268,13 +1271,7 @@
 					var btn = document.createElement('button');
 					btn.type = 'button';
 					btn.className = 'chip-btn';
-					var ico = document.createElement('span');
-					ico.className = 'ico ico-lsc';
-					ico.setAttribute('aria-hidden', 'true');
-					var txt = document.createElement('span');
-					txt.textContent = term.label;
-					btn.appendChild(ico);
-					btn.appendChild(txt);
+					btn.textContent = term.label;
 					btn.setAttribute('aria-label', 'Ver seña en LSC del concepto ' + term.label);
 					btn.addEventListener('click', function () {
 						openGlossaryWithUrl('glosario/index.html?termino=' + encodeURIComponent(term.id));
@@ -1283,6 +1280,7 @@
 				});
 			}
 
+			teoria.addEventListener('click', togglePlayPause);
 			teoria.addEventListener('loadedmetadata', updateTimelineUI);
 			teoria.addEventListener('timeupdate', function () {
 				updateTimelineUI();
@@ -1290,7 +1288,7 @@
 			});
 			teoria.addEventListener('ended', function () {
 				pauseAll();
-				announce('Fin de la lección.');
+				announce('Fin de la lección');
 			});
 
 			seekSlider.addEventListener('input', function () {
@@ -1313,7 +1311,6 @@
 				var large = interpreterContainer.classList.toggle('is-large');
 				btnTogglePipSize.setAttribute('aria-pressed', String(large));
 				btnTogglePipSize.textContent = large ? 'Reducir' : 'Ampliar';
-				announce(large ? 'Tamaño del intérprete LSC ampliado.' : 'Tamaño del intérprete LSC estándar.');
 			});
 
 			speedBtns.forEach(function (btn) {
